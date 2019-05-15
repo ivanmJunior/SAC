@@ -2,14 +2,18 @@ package br.com.sacHelp.model.entity;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,6 +26,7 @@ public class Chamados {
 	private int id;
 	private String descricao;
 	private Long protocolo;
+	private String tipoAtendimento;
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
@@ -31,6 +36,10 @@ public class Chamados {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Calendar dataFechamento;
+	
+	@OneToMany(mappedBy="chamado", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@OrderBy("id desc")
+	private Set<HistoricoChamado> historicosChamado;
 	
 	private String horaFechamento;
 	private String titulo;
@@ -94,19 +103,36 @@ public class Chamados {
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
+	
+	public String getTipoAtendimento() {
+		return tipoAtendimento;
+	}
+
+
+	public void setTipoAtendimento(String tipoAtendimento) {
+		this.tipoAtendimento = tipoAtendimento;
+	}
+
+
 	public String getSolucao() {
 		return Solucao;
 	}
+	public Set<HistoricoChamado> getHistoricosChamado() {
+		return historicosChamado;
+	}
+
+
+	public void setHistoricosChamado(Set<HistoricoChamado> historicosChamado) {
+		this.historicosChamado = historicosChamado;
+	}
+
+
 	public Long getProtocolo() {
 		return protocolo;
 	}
-
-
 	public void setProtocolo(Long protocolo) {
 		this.protocolo = protocolo;
 	}
-
-
 	public void setSolucao(String solucao) {
 		Solucao = solucao;
 	}
@@ -143,13 +169,9 @@ public class Chamados {
 	public String getObservacao() {
 		return observacao;
 	}
-
-
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
-
-
 	public String getDiferencaTempoDeEntrega() {
 		return diferencaTempoDeEntrega;
 	}

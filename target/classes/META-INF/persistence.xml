@@ -9,6 +9,7 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         
          <class>br.com.sacHelp.model.entity.Chamados</class>
+         <class>br.com.sacHelp.model.entity.HistoricoChamado</class>
         
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />

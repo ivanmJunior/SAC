@@ -5,21 +5,27 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<link href="<%=request.getContextPath()%>/resources/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/resources/jquery-ui-1.12.1/jquery-ui.theme.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/resources/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
+
 <title>SacHelp - Chamados</title>
 </head>
 <body>
+
 	<div class="container-fluid">
 	      <div class="fixed-top">
-			<div class="p-2 mb-3 bg-secondary text-white">
-				<h1 class="mt-5">Chamados</h1>
+	      <jsp:include page="/WEB-INF/views/navBarDarkCorporation.jsp"></jsp:include>
+			<div class="p-2 bg-info text-white">
+				<h4 class="mt-5">Chamados</h4>
 			</div>
 			</div>
-			<h1 class="mt-5"><hr/></h1>
-			<h1 class="mt-5"><hr/></h1>
-			<h1 class="mt-5"><hr/></h1>
-		
+			<br>
+			<br>
+			<br>
+			<br>
       <div class="row">
       <div class="col-sm-2">
       		<a href="<%=request.getContextPath()%>/novoChamado" class="btn btn-outline-primary my-2 my-sm-3" >Novo</a>
@@ -34,10 +40,10 @@
       	</div>
       </div>
       
-		<table class="table table-striped">
+		<table class="table table-hover table-striped">
 		  <thead>
 		    <tr>
-		      <th scope="col">Id Chamado</th>
+		      <th scope="col">Id</th>
 		      <th scope="col">Título</th>
 		      <th scope="col">Descrição</th>
 		      <th scope="col">Abertura</th>
@@ -52,24 +58,28 @@
 		  <tbody>
 		  	<c:forEach items="${listaChamados}" var="chamado">
 	  		 	<tr>
-	  		 	  
 	  		 	  <td>${chamado.id}</td>
-	  		 	  <td>${chamado.titulo}</td>
-	  		 	  <td>${chamado.descricao}</td>
+	  		 	  <td style="width: 200px;">${chamado.titulo}</td>
+	  		 	  <td >${chamado.descricao}</td>
 			       <td><fmt:formatDate type="date" value="${chamado.dataAbertura.time}" pattern="dd/MM/yyyy"/></td>
 			      <td>${chamado.horaAbertura}</td>
 			      <td>${chamado.loja}</td>
 			      <td>${chamado.contato}</td>
 			      <td>${chamado.status}</td>
 			      <td>${chamado.tecResponsavel}</td>
-			      
-			      <td><a href="<%=request.getContextPath() %>/?id=${chamado.id}" class="btn btn-primary btn-xs">Editar</a>
-			      	  <a href="<%=request.getContextPath() %>/?id=${chamado.id}" class="btn btn-danger btn-xs">Excluir</a>
+			      <td><a href="<%=request.getContextPath() %>/abrirEditarChamado?id=${chamado.id}" class="btn btn-light btn-xs" title="Editar"><span class="ui-icon ui-icon-pencil"></span></a>
+			      	  <a href="<%=request.getContextPath() %>/?id=${chamado.id}" class="btn btn-light btn-xs" title="Excluir"><span class="ui-icon ui-icon-trash"></span></a>
+			      	  <a href="<%=request.getContextPath() %>/abrirLinhaDoTempo?id=${chamado.id}" class="btn btn-light btn-xs" title="Linha do Tempo"><span class="ui-icon ui-icon-clock text-white"></span></a>
 			      </td>
 		    	</tr>
 		  	</c:forEach>
 		   </tbody>
 		</table>
 	</div>
+	<script src="<%=request.getContextPath()%>/resources/js/jquery.min.js"></script>
+	<script	src="<%=request.getContextPath()%>/resources/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/jquery-ui-1.12.1/jquery-ui.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+	
 </body>
 </html>
