@@ -47,14 +47,17 @@ public class ChamadosController {
 		chamado.setHoraAbertura(sDFormat.format(new Date()));
 		chamado.setSolucao("");
 		
-		Set<HistoricoChamado> listaDoChamado = new HashSet<>();
+		Set<HistoricoChamado> listaPrimeiroHistorico = new HashSet<>();
+		
 		HistoricoChamado primeiroHistoricoChamado = new HistoricoChamado();
+		
 		primeiroHistoricoChamado.setChamado(chamado);
 		primeiroHistoricoChamado.setOcorrencia("ABERTO");
 		primeiroHistoricoChamado.setHora(sDFormat.format(new Date()));
-		listaDoChamado.add(primeiroHistoricoChamado);
 		
-		chamado.setHistoricosChamado(listaDoChamado);
+		listaPrimeiroHistorico.add(primeiroHistoricoChamado);
+		
+		chamado.setHistoricosChamado(listaPrimeiroHistorico);
 		
 		try {
 			chamadosService.adicionar(chamado);

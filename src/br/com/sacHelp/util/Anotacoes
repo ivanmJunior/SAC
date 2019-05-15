@@ -5,4 +5,11 @@
 --Criar rolagem na tabela da index mantendo titulos com BootStrap.
 
 --Criar linha do tempo do chamado de forma que registre qualquer alteração e/ou adição referente ao chamado.
+  Linha do tempo criada.
+  Registro de alteraçoes criada.
+  Registro de "ABERTO" na linha do tempo ao adicionar um novo chamado, criado.
+  Registro de "FINALIZADO" na linha do tempo ao finalizar o chamado, criado.
+  
 Quem, quando, que horas, o que?
+
+Tratada excessão ao acessar linha do tempo sem registro.
