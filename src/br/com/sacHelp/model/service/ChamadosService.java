@@ -20,6 +20,10 @@ import br.com.sacHelp.util.ContaPendentes;
 @Service
 public class ChamadosService {
 
+	private static String ordem = "asc";
+	private static String colunaAnteridor = "";
+	private List<Chamados> listaDaConsulta;
+	
 	@Autowired
 	IRepositorioChamados repChamadosDAO;
 	
@@ -46,6 +50,21 @@ public class ChamadosService {
 
 	public Chamados consultarChamadoPorId(int id) throws SQLException {
 		return repChamadosDAO.consultarChamadoProId(id);
+	}
+	
+	public List<Chamados> classificarAscDesc(String coluna) throws SQLException {
+		
+		if(ordem.equals("asc") && colunaAnteridor.equals(coluna)){
+			ordem = "desc";
+			listaDaConsulta = repChamadosDAO.consultarOrdenado(coluna, ordem);
+		}else{
+			ordem = "asc";
+			colunaAnteridor = coluna;
+			listaDaConsulta = repChamadosDAO.consultarOrdenado(coluna, ordem);
+		}
+		
+		return listaDaConsulta;
+		
 	}
 	
 	public List<Chamados> consultarAbertosOuEmAndamento() throws SQLException{
@@ -134,4 +153,6 @@ public class ChamadosService {
 		}
 		return novaLista;
 	}
+
+	
 }

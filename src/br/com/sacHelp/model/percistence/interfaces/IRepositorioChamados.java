@@ -9,6 +9,7 @@ public interface IRepositorioChamados {
 
 	void adicionar(Chamados chamado) throws SQLException;
 	List<Chamados> consultar() throws SQLException;
+	List<Chamados> consultarOrdenado(String coluna, String ordem) throws SQLException;
 	List<Chamados> consultarAbertosOuEmAndamento() throws SQLException;
 	List<Chamados> consultarAbertos() throws SQLException;
 	List<Chamados> consultarEmAndamento() throws SQLException;

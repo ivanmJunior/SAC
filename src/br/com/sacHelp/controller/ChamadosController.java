@@ -173,6 +173,20 @@ public class ChamadosController {
 		
 	}
 	
+	@RequestMapping("classificarLitaChamados")
+	public String classificarLitaChamados(Model modelo, String coluna){
+		
+		try {
+			List<Chamados> listaChamadosOrdemDesc = chamadosService.classificarAscDesc(coluna);
+			modelo.addAttribute("listaChamados", listaChamadosOrdemDesc);
+			return "chamado/listarChamados";
+		} catch (SQLException e) {
+			msg.setMensagemErro("Erro ao listar chamados Ordenados em Descrescente: " + e.getMessage());
+			e.printStackTrace();
+			return "redirect:mostraMensagemChamado";
+		}
+	}
+	
 	@RequestMapping("mostraMensagemChamado")
 	public ModelAndView execMensagens(){
 		String paginaMensagem = "";

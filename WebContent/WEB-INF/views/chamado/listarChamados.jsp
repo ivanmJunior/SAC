@@ -39,20 +39,69 @@
       		</form>
       	</div>
       </div>
-      
 		<table class="table table-hover table-striped">
 		  <thead>
-		    <tr>
-		      <th scope="col">Id</th>
-		      <th scope="col">Título</th>
-		      <th scope="col">Descrição</th>
-		      <th scope="col">Abertura</th>
-		      <th scope="col">Hora</th>
-		      <th scope="col">Loja</th>
-		      <th scope="col">Contato</th>
-		      <th scope="col">Status</th>
-		      <th scope="col">Téc/Responsavel</th>
-		      <th scope="col">Ação</th>
+		    <tr >
+		      <th scope="col">
+		      	<a href="<%=request.getContextPath()%>/classificarLitaChamados?coluna=id"
+		      		class="btn btn-light">
+		      		<b>Id</b>
+		      	</a>
+		      </th>
+		      <th scope="col">
+		      	<a href="<%=request.getContextPath()%>/classificarLitaChamados?coluna=titulo" 
+		      		class="btn btn-light">
+		      		<b>Título</b>
+		      	</a>
+		      </th>
+		      <th scope="col">
+		      	<a href="#" 
+		      		class="btn btn-light">
+		      		<b>Descrição</b>
+		      	</a>
+		      </th>
+		      <th scope="col">
+		      	<a href="<%=request.getContextPath()%>/classificarLitaChamados?coluna=dataAbertura" 
+		      		class="btn btn-light">
+		      		<b>Abertura</b>
+		      	</a>
+		      </th>
+		      <th scope="col">
+		      	<a href="<%=request.getContextPath()%>/classificarLitaChamados?coluna=horaAbertura" 
+		      		class="btn btn-light">
+		      		<b>Hora</b>
+		      	</a>
+			  </th>
+		      <th scope="col">
+		      	<a href="<%=request.getContextPath()%>/classificarLitaChamados?coluna=loja"
+		      		class="btn btn-light">
+		      		<b>Loja</b>
+		      	</a>
+		      </th>
+		      <th scope="col">
+		      	<a href="<%=request.getContextPath()%>/classificarLitaChamados?coluna=contato"
+		      		class="btn btn-light">
+		      		<b>Contato</b>
+		      	</a>
+		      </th>
+		      <th scope="col">
+		      	<a href="<%=request.getContextPath()%>/classificarLitaChamados?coluna=status"
+		      		class="btn btn-light">
+		      		<b>Status</b>
+		      	</a>
+		      </th>
+		      <th scope="col">
+		      	<a href="<%=request.getContextPath()%>/classificarLitaChamados?coluna=tecResponsavel"
+		      		class="btn btn-light">
+		      		<b>Téc/Responsavel</b>
+		      	</a>
+		      </th>
+		      <th scope="col">
+		      <a href="#"
+		      		class="btn btn-light">
+		      		<b>Ação</b>
+		      	</a>
+		      </th>
 		    </tr>
 		  </thead>
 		  <tbody>

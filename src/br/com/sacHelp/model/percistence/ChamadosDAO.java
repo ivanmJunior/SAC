@@ -79,4 +79,12 @@ public class ChamadosDAO implements IRepositorioChamados {
 		return listaDaConsulta;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Chamados> consultarOrdenado(String coluna, String ordem) throws SQLException {
+		List<Chamados> listaDaConsulta = null;
+		listaDaConsulta = manager.createQuery("select c from Chamados as c order by c."+coluna +" "+ordem).getResultList();
+		return listaDaConsulta;
+	}
+
 }
