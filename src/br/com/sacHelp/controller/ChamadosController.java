@@ -75,6 +75,7 @@ public class ChamadosController {
 		try {
 			List<Chamados> listaChamados = chamadosService.consultar();
 			modelo.addAttribute("listaChamados", listaChamados);
+			modelo.addAttribute("registros", listaChamados.size());
 			return "chamado/listarChamados";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
@@ -179,10 +180,25 @@ public class ChamadosController {
 		try {
 			List<Chamados> listaChamadosOrdemDesc = chamadosService.classificarAscDesc(coluna);
 			modelo.addAttribute("listaChamados", listaChamadosOrdemDesc);
+			modelo.addAttribute("registros", listaChamadosOrdemDesc.size());
 			return "chamado/listarChamados";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao listar chamados Ordenados em Descrescente: " + e.getMessage());
-			e.printStackTrace();
+			return "redirect:mostraMensagemChamado";
+		}
+	}
+	
+	@RequestMapping("filtrarPorDescricaoOuTitulo")
+	public String filtrarPorDescricaoOuTitulo(Model modelo, Chamados chamado){
+		
+		try {
+			chamado.setTitulo(chamado.getDescricao());
+			List<Chamados> listaChamados = chamadosService.consultarPorDescricaoOuTitulo(chamado);
+			modelo.addAttribute("listaChamados", listaChamados);
+			modelo.addAttribute("registros", listaChamados.size());
+			return "chamado/listarChamados";
+		} catch (SQLException e) {
+			msg.setMensagemErro("Erro ao filtrar chamados: " + e.getMessage());
 			return "redirect:mostraMensagemChamado";
 		}
 	}

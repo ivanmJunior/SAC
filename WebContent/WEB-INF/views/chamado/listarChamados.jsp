@@ -10,6 +10,7 @@
 	<link href="<%=request.getContextPath()%>/resources/jquery-ui-1.12.1/jquery-ui.theme.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/resources/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/resources/css/sticky-footer-navbar.css" rel="stylesheet">
 
 <title>SacHelp - Chamados</title>
 </head>
@@ -32,9 +33,9 @@
       		<a href="<%=request.getContextPath()%>/index" class="btn btn-outline-secondary my-2 my-sm-3" >Página Inicial</a>	
       	</div>
       	<div class="col-sm-4">
-      		<form class="form-inline mt-2 mt-md-0" action="<%=request.getContextPath()%>/filtrarTelaFuncionario?nome=${funcionario.nome}">
-      			<input class="form-control mr-sm-1" type="text" name="nome"
-				placeholder="Digite aqui" aria-label="Search">
+      		<form class="form-inline mt-2 mt-md-0" action="<%=request.getContextPath()%>/filtrarPorDescricaoOuTitulo">
+      			<input class="form-control mr-sm-1" type="text" name="descricao"
+				placeholder="Digite uma palavra chave" aria-label="Search">
 				<button class="btn btn-outline-success my-2 my-sm-3" type="submit">Filtrar</button>
       		</form>
       	</div>
@@ -125,10 +126,20 @@
 		   </tbody>
 		</table>
 	</div>
+	
+	
+	
 	<script src="<%=request.getContextPath()%>/resources/js/jquery.min.js"></script>
 	<script	src="<%=request.getContextPath()%>/resources/js/bootstrap.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/jquery-ui-1.12.1/jquery-ui.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/jquery-ui-1.12.1/jquery-ui.min.js"></script>
-	
+	<div class="fixed-bottom">	
+	<footer class="footer mt-auto py-1">
+	  <div class="container-fluid">
+	    <span class="text-primary font-weight-bold">${registros} Registros</span>
+	  </div>
+	</footer>
+	</div>
+
 </body>
 </html>

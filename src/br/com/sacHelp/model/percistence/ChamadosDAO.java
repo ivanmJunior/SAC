@@ -87,4 +87,13 @@ public class ChamadosDAO implements IRepositorioChamados {
 		return listaDaConsulta;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Chamados> consultarPorDescricaoOuTitulo(Chamados chamado) throws SQLException {
+		List<Chamados> listaDaConsulta = null;
+		listaDaConsulta = manager.createQuery("select c from Chamados as c where c.descricao like '%"+ 
+				chamado.getDescricao() +"%' or c.titulo like '%"+ chamado.getTitulo() + "%'" ).getResultList();
+		return listaDaConsulta;
+	}
+
 }

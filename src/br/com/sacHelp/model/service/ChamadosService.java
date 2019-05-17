@@ -67,6 +67,11 @@ public class ChamadosService {
 		
 	}
 	
+	public List<Chamados> consultarPorDescricaoOuTitulo(Chamados chamado) throws SQLException{
+		return repChamadosDAO.consultarPorDescricaoOuTitulo(chamado);
+	}
+	
+	
 	public List<Chamados> consultarAbertosOuEmAndamento() throws SQLException{
 		return repChamadosDAO.consultarAbertosOuEmAndamento();
 	}
