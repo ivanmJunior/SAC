@@ -22,7 +22,7 @@
 				</div>
 			</li>
 			<li class="nav-item"><a class="nav-link " href="#">Adicionar Progresso</a></li>
-			<li class="nav-item"><a class="nav-link " href="#" data-toggle="modal" data-target="#detalhesChamadoModal">Detalhes Chamado</a></li>
+			<li class="nav-item"><a class="nav-link " href="#">Detalhes Chamado</a></li>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#"
 						id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"

@@ -44,7 +44,7 @@ public class HistoricoChamadosDAO implements IRepositorioHistoricoChamado {
 
 	@Override
 	public void editar(HistoricoChamado historicoChamado) throws SQLException {
-		// TODO Auto-generated method stub
+		manager.merge(historicoChamado);
 		
 	}
 	

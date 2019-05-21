@@ -7,10 +7,12 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.sacHelp.model.entity.HistoricoChamado;
+import br.com.sacHelp.model.service.ChamadosService;
 import br.com.sacHelp.model.service.HistoricoChamadoService;
 import br.com.sacHelp.util.Mensagem;
 
@@ -20,6 +22,9 @@ public class HistoricoChamadoController {
 
 	@Autowired
 	HistoricoChamadoService historicoChamadoService;
+	
+	@Autowired
+	ChamadosService chamadosService;
 	
 	Mensagem msg = new Mensagem();
 	SimpleDateFormat sDFormat = new SimpleDateFormat("HH:mm:ss");
@@ -38,25 +43,8 @@ public class HistoricoChamadoController {
 			return "redirect:mostraMensagemHistorico";
 		}
 	}
-
 	
-	
-	/*@RequestMapping("adicionarHistorico")
-	public String adicionaChamado(Chamados chamado){
-		chamado.setContato(chamado.getContato().replace(",", ""));// verificar depois
-		SimpleDateFormat sDFormat = new SimpleDateFormat("HH:mm:ss");
-		
-		chamado.getDataAbertura().setTime(new Date());
-		chamado.setHoraAbertura(sDFormat.format(new Date()));
-		try {
-			historicoChamadoService.adicionar(chamado);
-			return "chamado/novoChamado";
-		} catch (PrazoInvadoException | CampoVazioException | SQLException e) {
-			msg.setMensagemErro(e.getMessage());
-			return "redirect:mostraMensagemChamado";
-		}
-	}
-	
+	/*
 	@RequestMapping("listarChamados")
 	public String litarChamados(Model modelo){
 		
@@ -69,34 +57,34 @@ public class HistoricoChamadoController {
 			e.printStackTrace();
 			return "redirect:mostraMensagemChamado";
 		}
-	}
+	}*/
 	
-	@RequestMapping("abrirEditarChamado")
-	public String abrirEditarChamado(int id, Model modelo){
+	@RequestMapping("abrirEditarHistoricoChamado")
+	public String abrirEditarHistoricoChamado(int id, Model modelo){
 		
 		try {
-			Chamados chamadoDaConsulta = chamadosService.consultarChamadoPorId(id);
-			modelo.addAttribute("chamado", chamadoDaConsulta);
-			return "chamado/editarChamado";
+			HistoricoChamado historicochamadoDaConsulta = historicoChamadoService.consultarHistoricoPorId(id);
+			modelo.addAttribute("historicoChamado", historicochamadoDaConsulta);
+			return "chamado/editarHistoricoChamado";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro! "+e.getMessage());
-			return "redirect:mostraMensagemChamado";
+			return "redirect:mostraMensagemHistorico";
 		}
 	}
 	
-	@RequestMapping("editarChamado")
-	public String editarChamado(Chamados chamado){
+	@RequestMapping("editarHistorico")
+	public String editarHistoricoChamado(HistoricoChamado historicoChamado){
 		
 		try {
-			chamadosService.editar(chamado);
-			return "redirect:index";
+			historicoChamadoService.editar(historicoChamado);
+			return "redirect:abrirLinhaDoTempo?id="+historicoChamado.getChamado().getId();
 		} catch (SQLException e) {
 			msg.setMensagemErro(e.getMessage());
-			e.printStackTrace();
-			return "redirect:mostraMensagemChamado";
+			return "redirect:mostraMensagemHistorico";
 		}
 		
-	}*/
+	}
+
 	
 	@RequestMapping("mostraMensagemHistorico")
 	public ModelAndView execMensagens(){

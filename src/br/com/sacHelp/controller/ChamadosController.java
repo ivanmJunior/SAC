@@ -84,7 +84,7 @@ public class ChamadosController {
 		}
 	}
 	
-	@RequestMapping("selecionarChamado")
+	/*@RequestMapping("selecionarChamado")
 	public String selecionarChamado(int id, Model modelo){
 		
 		try {
@@ -95,7 +95,7 @@ public class ChamadosController {
 			msg.setMensagemErro("Erro! "+e.getMessage());
 			return "redirect:mostraMensagemChamado";
 		}
-	}
+	}*/
 	
 	@RequestMapping("abrirEditarChamado")
 	public String abrirEditarChamado(int id, Model modelo){

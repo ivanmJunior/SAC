@@ -149,7 +149,7 @@
 											class="ui-icon ui-icon-trash Red"></span></a> <a href=""
 										class="btn btn-light btn-xs" title="Adicionar progresso"
 										data-toggle="modal" data-target="#adicionarProgressoModal"> <span
-											class="ui-icon ui-icon-calendar"></span></a></td>
+											class="ui-icon ui-icon-signal"></span></a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
