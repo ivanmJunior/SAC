@@ -28,6 +28,8 @@ public class HistoricoChamadoController {
 	
 	Mensagem msg = new Mensagem();
 	SimpleDateFormat sDFormat = new SimpleDateFormat("HH:mm:ss");
+	private static int id;
+	
 	
 	@RequestMapping("adicionarHistoricoChamado")
 	public String adicionarHistoricoChamado(HistoricoChamado historicoChamado){
@@ -37,27 +39,26 @@ public class HistoricoChamadoController {
 		
 		try {
 			historicoChamadoService.adicionar(historicoChamado);
-			return "redirect:index";
+			id = historicoChamado.getId();
+			return "redirect:mostrarNovoHistorico";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao Adicionar Historico. "+e.getMessage());
 			return "redirect:mostraMensagemHistorico";
 		}
 	}
 	
-	/*
-	@RequestMapping("listarChamados")
-	public String litarChamados(Model modelo){
+		//MOSTRA A PÁGINA DA LINHA DO TEMPO COM O NOVO HISTÓRICO ADICIONADO
+	@RequestMapping("mostrarNovoHistorico")
+	public String mostrarNovoHistorico(Model modelo){
 		
 		try {
-			List<Chamados> listaChamados = chamadosService.consultar();
-			modelo.addAttribute("listaChamados", listaChamados);
-			return "chamado/listarChamados";
+			HistoricoChamado historicoDaConsulta = historicoChamadoService.consultarHistoricoPorId(id);
+			return "redirect:abrirLinhaDoTempo?id="+historicoDaConsulta.getChamado().getId();
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
-			e.printStackTrace();
 			return "redirect:mostraMensagemChamado";
 		}
-	}*/
+	}
 	
 	@RequestMapping("abrirEditarHistoricoChamado")
 	public String abrirEditarHistoricoChamado(int id, Model modelo){
