@@ -52,6 +52,7 @@ public class ChamadosService {
 		return repChamadosDAO.consultarChamadoProId(id);
 	}
 	
+	//CLASSIFICA EM CRESCENTE O DECRESCENTE A PARTIR DE UMA COLUNA DA TELA LISTAR CHAMADOS
 	public List<Chamados> classificarAscDesc(String coluna) throws SQLException {
 		
 		if(ordem.equals("asc") && colunaAnteridor.equals(coluna)){
@@ -84,6 +85,7 @@ public class ChamadosService {
 		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarEmAndamento());
 	}
 	
+	//CONSULTA CHAMADOS PENDENTES E FILTRA OS ATRAZADOS
 	public List<Chamados> consultarAtrasados() throws SQLException{
 		return filtrarAtrasados(repChamadosDAO.consultarAbertosOuEmAndamento());
 	}
@@ -92,6 +94,7 @@ public class ChamadosService {
 		repChamadosDAO.editar(chamado);
 	}
 	
+	//CONTA CHAMADOS PENDENTES SEPARANDO ABERTOS, EM ANDAMENTO E ATRAZADOS
 	public ContaPendentes contarChamadosPendentes(List<Chamados> listaChamadosPendentes){
 		ContaPendentes contaPendentes = new ContaPendentes();
 		Calendar dataAtual = new GregorianCalendar();
@@ -119,6 +122,7 @@ public class ChamadosService {
 		return contaPendentes;
 	}
 	
+	//ADICIONA APENAS O CALCULO DO ATRAZO EM CADA CHAMADO DA LISTA PASSADA
 	public List<Chamados> adicionarCalcAtrasoNaLista(List<Chamados> listaChamadosPendentes){
 		List<Chamados> novaLista = new LinkedList<>();
 		int dias = 0;
@@ -138,6 +142,7 @@ public class ChamadosService {
 		
 	}
 	
+	//CALCULA A QUANTIDADE DE DIAS EM ATRAZO DO CHAMADO
 	public int calcularAtraso(Chamados chamado){
 		Calendar dataAtual = Calendar.getInstance();
 		dataAtual.setTime(new Date());
@@ -146,12 +151,13 @@ public class ChamadosService {
 		return dias;
 	}
 	
+	//FILTRA DE UMA LISTA DE CHAMADOS APENAS OS ATRAZADOS
 	public List<Chamados> filtrarAtrasados(List<Chamados> listaChamadosPendentes){
 		List<Chamados> novaLista = new LinkedList<>();
 		int dias = 0;
 		for(Chamados chamadoDaLista : listaChamadosPendentes){
 			dias = calcularAtraso(chamadoDaLista);
-			if(dias > 0){
+			if(dias >= 0){
 				chamadoDaLista.setDiferencaTempoDeEntrega(dias+" Atra");
 				novaLista.add(chamadoDaLista);
 			}

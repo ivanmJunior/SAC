@@ -57,7 +57,7 @@ public class Chamados {
 	
 	public Chamados(){
 		this.dataAbertura = new GregorianCalendar();
-		this.dataFechamento = new GregorianCalendar();
+		//this.dataFechamento = new GregorianCalendar();
 	}
 	
 	

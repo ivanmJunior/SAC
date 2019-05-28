@@ -3,6 +3,7 @@ package br.com.sacHelp.controller;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,6 +40,7 @@ public class ChamadosController {
 	public String novoChamado(){
 		return "chamado/novoChamado";
 	}
+	
 	
 	@RequestMapping("adicionarChamado")
 	public String adicionaChamado(Chamados chamado){
@@ -84,18 +86,6 @@ public class ChamadosController {
 		}
 	}
 	
-	/*@RequestMapping("selecionarChamado")
-	public String selecionarChamado(int id, Model modelo){
-		
-		try {
-			Chamados chamadoDaConsulta = chamadosService.consultarChamadoPorId(id);
-			modelo.addAttribute("chamado", chamadoDaConsulta);
-			return "index";
-		} catch (SQLException e) {
-			msg.setMensagemErro("Erro! "+e.getMessage());
-			return "redirect:mostraMensagemChamado";
-		}
-	}*/
 	
 	@RequestMapping("abrirEditarChamado")
 	public String abrirEditarChamado(int id, Model modelo){
@@ -154,7 +144,7 @@ public class ChamadosController {
 		try {
 			Chamados chamadoDaConsulta = chamadosService.consultarChamadoPorId(chamado.getId());
 			chamadoDaConsulta.setSolucao(chamado.getSolucao());
-			chamadoDaConsulta.setDataFechamento(chamado.getDataFechamento());
+			chamadoDaConsulta.setDataFechamento(new GregorianCalendar());
 			chamadoDaConsulta.setHoraFechamento(sDFormat.format(new Date()));
 			chamadoDaConsulta.setStatus("FINALIZADO");
 			

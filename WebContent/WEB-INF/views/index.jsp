@@ -71,7 +71,7 @@
 						src="<%=request.getContextPath()%>/resources/imagens/Listar.png">
 					</a> 
 					<a id="btnLinhaDoTempo" title="Linha do Tempo do Chamado"
-						href=""	class="btn btn-light"> <img alt="" width="145px"
+						href="#" class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/Timeline3.png">
 					</a> 
 					<a title="Adicionar Progresso"

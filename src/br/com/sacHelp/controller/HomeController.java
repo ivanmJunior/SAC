@@ -25,15 +25,17 @@ public class HomeController {
 	
 	Mensagem msg = new Mensagem();
 	private static ContaPendentes contaPendentes;
+	private static int diasCertificadoDigital;
 	
 	@RequestMapping("index")
 	public String openHome(Model modelo){
 		try {
 			List<Chamados> listaChamados = chamadosService.consultarAbertosOuEmAndamento();
 			contaPendentes = chamadosService.contarChamadosPendentes(listaChamados);
+			diasCertificadoDigital = calcularValidadeCertificado();
 			modelo.addAttribute("listaChamados", listaChamados);
 			modelo.addAttribute("contaPendentes", contaPendentes);
-			modelo.addAttribute("certificadoValidade", calcularValidadeCertificado());
+			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
 			return "index";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
@@ -47,6 +49,7 @@ public class HomeController {
 			List<Chamados> listaChamados = chamadosService.consultarAbertos();
 			modelo.addAttribute("listaChamados", listaChamados);
 			modelo.addAttribute("contaPendentes", contaPendentes);
+			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
 			return "index";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
@@ -60,12 +63,14 @@ public class HomeController {
 			List<Chamados> listaChamados = chamadosService.consultarEmAndamento();
 			modelo.addAttribute("listaChamados", listaChamados);
 			modelo.addAttribute("contaPendentes", contaPendentes);
+			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
 			return "index";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
 			return "redirect:mostraMensagemChamado";
 		}
 	}
+	
 	
 	@RequestMapping("indexAtrasados")
 	public String openHomeAtrasados(Model modelo){
@@ -73,6 +78,7 @@ public class HomeController {
 			List<Chamados> listaChamados = chamadosService.consultarAtrasados();
 			modelo.addAttribute("listaChamados", listaChamados);
 			modelo.addAttribute("contaPendentes", contaPendentes);
+			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
 			return "index";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
@@ -80,6 +86,8 @@ public class HomeController {
 		}
 	}
 	
+	
+	//CALCULA QUANTOS DIAS RESTA PARA O VENCIMENTO DO CERTIFICADO DIGITAL DA PORTOLIVRE COM BASE NA DATA INFORMADA.
 	public int calcularValidadeCertificado(){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date dData;
@@ -94,8 +102,6 @@ public class HomeController {
 			int dias = dataValidade.get(Calendar.DAY_OF_YEAR) - dataAtual.get(Calendar.DAY_OF_YEAR);
 			return (ano2 - ano1)*365 + (dias);
 		} catch (ParseException e) {
-			
-			e.printStackTrace();
 			return 99999;
 		}
 		

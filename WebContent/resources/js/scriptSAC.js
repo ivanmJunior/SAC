@@ -16,6 +16,7 @@
   }, false);
 })();
 
+
 function pegarIdChamado(linhaClicada){
 	
 	colunas = linhaClicada.getElementsByTagName('td');

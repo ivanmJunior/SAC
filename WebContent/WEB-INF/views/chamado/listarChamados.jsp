@@ -68,9 +68,9 @@
 		      	</a>
 		      </th>
 		      <th scope="col">
-		      	<a href="<%=request.getContextPath()%>/classificarLitaChamados?coluna=horaAbertura" 
+		      	<a href="<%=request.getContextPath()%>/classificarLitaChamados?coluna=dataFechamento"
 		      		class="btn btn-light">
-		      		<b>Hora</b>
+		      		<b>Fechamento</b>
 		      	</a>
 			  </th>
 		      <th scope="col">
@@ -111,8 +111,8 @@
 	  		 	  <td>${chamado.id}</td>
 	  		 	  <td style="width: 200px;">${chamado.titulo}</td>
 	  		 	  <td >${chamado.descricao}</td>
-			       <td><fmt:formatDate type="date" value="${chamado.dataAbertura.time}" pattern="dd/MM/yyyy"/></td>
-			      <td>${chamado.horaAbertura}</td>
+			      <td><fmt:formatDate type="date" value="${chamado.dataAbertura.time}" pattern="dd/MM/yyyy"/></td>
+			      <td><fmt:formatDate type="date" value="${chamado.dataFechamento.time}" pattern="dd/MM/yyyy"/></td>
 			      <td>${chamado.loja}</td>
 			      <td>${chamado.contato}</td>
 			      <td>${chamado.status}</td>

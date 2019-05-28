@@ -1,15 +1,35 @@
---Criar filtro para mostrar chamados do dia.
+--Criar filtro para mostrar chamados do dia. OK.
 
---Criar soluções de Status para chamados atrazados em cor com javaScript.
+--Criar soluções de Status para chamados atrazados em cor com javaScript. OK.
 
---Criar rolagem na tabela da index mantendo titulos com BootStrap.
+--Criar rolagem na tabela da index mantendo titulos com BootStrap. OK.
 
---Criar linha do tempo do chamado de forma que registre qualquer alteração e/ou adição referente ao chamado.
-  Linha do tempo criada.
-  Registro de alteraçoes criada.
-  Registro de "ABERTO" na linha do tempo ao adicionar um novo chamado, criado.
-  Registro de "FINALIZADO" na linha do tempo ao finalizar o chamado, criado.
+--Criar linha do tempo do chamado de forma que registre qualquer alteração e/ou adição referente ao chamado. OK.
+  Linha do tempo criada. OK.
+  Registro de alteraçoes criada. OK.
+  Registro de "ABERTO" na linha do tempo ao adicionar um novo chamado, criado. OK.
+  Registro de "FINALIZADO" na linha do tempo ao finalizar o chamado, criado. OK.
   
-Quem, quando, que horas, o que?
+Quem, quando, que horas, o que? OK.
 
-Tratada excessão ao acessar linha do tempo sem registro.
+--Tratada excessão ao acessar linha do tempo sem registro. OK.
+
+--Tratar adição da data de Fechamento no momento da Aberturo do chamado. OK. Foi removida a instancia do contrutor da class Chamados.
+
+--Reorganizar barra de menus.
+
+--Criar Alertas.
+
+--Criar rotinas de login.
+
+--Criar perfil de usuário.
+
+--Criar rotinas de Eliminar chamado.
+
+--Criar rotinas de Eliminar Historico.
+--Criar registro de Alterações de Histórico.
+
+--Criar rotinas de atualizar prazo.
+
+--Criar rotinas de registro de Lembretes/tarefas fixas.
+--Criar Alertas de Lmbretes.
