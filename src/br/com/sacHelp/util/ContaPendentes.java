@@ -6,6 +6,7 @@ public class ContaPendentes {
 	private int qtdEmAndamento;
 	private int qtdAtrasados;
 	private int totalPendentes;
+	private int qtdPrazoPraHoje;
 	
 	public int getQtdAbertos() {
 		return qtdAbertos;
@@ -30,6 +31,12 @@ public class ContaPendentes {
 	}
 	public void setQtdAtrasados(int qtdAtrasados) {
 		this.qtdAtrasados = qtdAtrasados;
+	}
+	public int getQtdPrazoPraHoje() {
+		return qtdPrazoPraHoje;
+	}
+	public void setQtdPrazoPraHoje(int qtdPrazoPraHoje) {
+		this.qtdPrazoPraHoje = qtdPrazoPraHoje;
 	}
 	
 }

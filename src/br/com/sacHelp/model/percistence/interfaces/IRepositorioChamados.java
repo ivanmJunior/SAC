@@ -11,6 +11,7 @@ public interface IRepositorioChamados {
 	List<Chamados> consultar() throws SQLException;
 	List<Chamados> consultarOrdenado(String coluna, String ordem) throws SQLException;
 	List<Chamados> consultarPorDescricaoOuTitulo(Chamados chamado) throws SQLException;
+	List<Chamados> consultarPorPrazoSolucaoHoje(Chamados chamado) throws SQLException;
 	List<Chamados> consultarAbertosOuEmAndamento() throws SQLException;
 	List<Chamados> consultarAbertos() throws SQLException;
 	List<Chamados> consultarEmAndamento() throws SQLException;

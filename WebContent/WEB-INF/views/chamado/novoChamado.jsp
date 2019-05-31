@@ -91,6 +91,7 @@
 							<option value="Software Instalacao/config">Software Instalação/config</option>
 							<option value="Planilhas">Planilhas</option>
 							<option value="Consultas SQL">Consultas SQL</option>
+							<option value="Arquivos">Arquivos</option>
 							<option value="Arquivos Fiscais">Arquivos Fiscais</option>
 							<option value="Rede">Rede</option>
 							<option value="Infraestrutura">Infraestrutura</option>

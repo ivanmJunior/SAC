@@ -48,6 +48,9 @@
 							<a href="<%=request.getContextPath()%>/indexAtrasados" class="btn btn-danger">
 								Atrasados <span class="badge badge-light">${contaPendentes.qtdAtrasados}</span>
 							</a>
+							<a href="<%=request.getContextPath()%>/indexPraHoje" class="btn btn-danger">
+								Pra Hoje <span class="badge badge-light">${contaPendentes.qtdPrazoPraHoje}</span>
+							</a>
 						</h3>
 					</div>
 				</div>
@@ -91,7 +94,7 @@
 						class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/Enviar.png">
 					</a>
-					<a title="Atualizar Prazo" href="<%=request.getContextPath()%>/index"
+					<a title="Atualizar Prazo" href="" data-toggle="modal" data-target="#atualizarPrazo"
 						class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/NovoPrazo2.png">
 					</a>
@@ -167,7 +170,7 @@
 					<h5 class="modal-title" id="exampleModalLabel">Registrar
 						Progresso</h5>
 					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+						aria-label="Close" onclick="atualizarPagina();">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -189,7 +192,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Fechar</button>
+								data-dismiss="modal" onclick="atualizarPagina();">Fechar</button>
 							<button type="submit" class="btn btn-success">Adicionar</button>
 						</div>
 					</form>
@@ -207,7 +210,7 @@
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Finalizar Chamado</h5>
 					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+						aria-label="Close" onclick="atualizarPagina();">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -229,7 +232,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Fechar</button>
+								data-dismiss="modal" onclick="atualizarPagina();">Fechar</button>
 							<button type="submit" class="btn btn-success">Finalizar</button>
 						</div>
 					</form>
@@ -237,6 +240,46 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Modal Atualizar Prazo -->
+	
+	<div class="modal fade " id="atualizarPrazo" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Atualizar Prazo</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close" onclick="atualizarPagina();">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form class="needs-validation" novalidate
+						action="<%=request.getContextPath()%>/index#"
+						method="post">
+						<div class="col-md-7 mb-3">
+							<label id="lblIdAtualizarPrazo" for="inputIdAtualizarPrazo">Chamado:
+							</label>
+							<input type="text" hidden="true" name="id"
+							class="form-control" id="inputIdAtualizarPrazo">
+						</div>
+						<div class="col-md-8 mb-3">
+							<label for="PrazoSolucao">Novo Prazo</label>
+						<input type="date" name="prazoSolucao" class="form-control" id="PrazoSolucao" required>
+							<div class="invalid-feedback">Informe uma de Prazo Inicial.</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal" onclick="atualizarPagina();">Fechar</button>
+							<button type="submit" class="btn btn-success">Finalizar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<footer class="footer mt-auto py-1">
 	  <div class="container-fluid">
 	    <span class="text-danger font-weight-bold">Certificado Digital Vence Em: ${certificadoValidade} dias.</span>

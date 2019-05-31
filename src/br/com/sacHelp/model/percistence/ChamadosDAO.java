@@ -1,6 +1,7 @@
 package br.com.sacHelp.model.percistence;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -93,6 +94,16 @@ public class ChamadosDAO implements IRepositorioChamados {
 		List<Chamados> listaDaConsulta = null;
 		listaDaConsulta = manager.createQuery("select c from Chamados as c where c.descricao like '%"+ 
 				chamado.getDescricao() +"%' or c.titulo like '%"+ chamado.getTitulo() + "%'" ).getResultList();
+		return listaDaConsulta;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Chamados> consultarPorPrazoSolucaoHoje(Chamados chamado) throws SQLException {
+		SimpleDateFormat sdfFomatarData = new SimpleDateFormat("yyyy-MM-dd");
+		List<Chamados> listaDaConsulta = null;
+		listaDaConsulta = manager.createQuery("select c from Chamados as c where c.prazoSolucao = '"+
+				sdfFomatarData.format(chamado.getPrazoSolucao().getTime())+"' and c.status<>'FINALIZADO'").getResultList(); 
 		return listaDaConsulta;
 	}
 

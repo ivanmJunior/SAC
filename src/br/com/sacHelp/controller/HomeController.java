@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,23 @@ public class HomeController {
 	public String openHomeAtrasados(Model modelo){
 		try {
 			List<Chamados> listaChamados = chamadosService.consultarAtrasados();
+			modelo.addAttribute("listaChamados", listaChamados);
+			modelo.addAttribute("contaPendentes", contaPendentes);
+			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
+			return "index";
+		} catch (SQLException e) {
+			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
+			return "redirect:mostraMensagemChamado";
+		}
+	}
+	
+	
+	@RequestMapping("indexPraHoje")
+	public String openHomePrazoSolucaoPraHoje(Model modelo){
+		try {
+			Chamados chamado = new Chamados();
+			chamado.setPrazoSolucao(new GregorianCalendar());
+			List<Chamados> listaChamados = chamadosService.consultarPorPrazoSolucaoHoje(chamado);
 			modelo.addAttribute("listaChamados", listaChamados);
 			modelo.addAttribute("contaPendentes", contaPendentes);
 			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);

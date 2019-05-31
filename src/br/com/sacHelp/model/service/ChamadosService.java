@@ -72,6 +72,9 @@ public class ChamadosService {
 		return repChamadosDAO.consultarPorDescricaoOuTitulo(chamado);
 	}
 	
+	public List<Chamados> consultarPorPrazoSolucaoHoje(Chamados chamado) throws SQLException {
+		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarPorPrazoSolucaoHoje(chamado));
+	}
 	
 	public List<Chamados> consultarAbertosOuEmAndamento() throws SQLException{
 		return repChamadosDAO.consultarAbertosOuEmAndamento();
@@ -94,35 +97,42 @@ public class ChamadosService {
 		repChamadosDAO.editar(chamado);
 	}
 	
-	//CONTA CHAMADOS PENDENTES SEPARANDO ABERTOS, EM ANDAMENTO E ATRAZADOS
+	//CONTA CHAMADOS PENDENTES SEPARANDO ABERTOS, EM ANDAMENTO E ATRASADOS
 	public ContaPendentes contarChamadosPendentes(List<Chamados> listaChamadosPendentes){
 		ContaPendentes contaPendentes = new ContaPendentes();
 		Calendar dataAtual = new GregorianCalendar();
 		int dias = 0;
-		for(Chamados chamadosDaConsulta : listaChamadosPendentes){
-			if(chamadosDaConsulta.getStatus().equals("ABERTO")){
+		
+		for(Chamados chamadoDaConsulta : listaChamadosPendentes){
+			if(chamadoDaConsulta.getStatus().equals("ABERTO")){
 				contaPendentes.setQtdAbertos(contaPendentes.getQtdAbertos()+1);
-			}else if(chamadosDaConsulta.getStatus().equals("EM ANDAMENTO")){
+			}else if(chamadoDaConsulta.getStatus().equals("EM ANDAMENTO")){
 				contaPendentes.setQtdEmAndamento((contaPendentes.getQtdEmAndamento()+1));
 			}
 			
-			if(chamadosDaConsulta.getPrazoSolucao().before(dataAtual)){
+			if(chamadoDaConsulta.getPrazoSolucao().before(dataAtual) &&
+					!sDFormat.format(chamadoDaConsulta.getPrazoSolucao().getTime()).equals(sDFormat.format(dataAtual.getTime()))){
 				contaPendentes.setQtdAtrasados(contaPendentes.getQtdAtrasados()+1);
 			}
 			
+			if(sDFormat.format(chamadoDaConsulta.getPrazoSolucao().getTime()).equals(sDFormat.format(dataAtual.getTime()))){
+				contaPendentes.setQtdPrazoPraHoje(contaPendentes.getQtdPrazoPraHoje()+1);
+			}
+			
+			
 			contaPendentes.setTotalPendentes(((contaPendentes.getQtdEmAndamento()+contaPendentes.getQtdAbertos())));
 			
-			dias = calcularAtraso(chamadosDaConsulta);
+			dias = calcularAtraso(chamadoDaConsulta);
 			if(dias > 0){
-				chamadosDaConsulta.setDiferencaTempoDeEntrega(dias+" Atra");
+				chamadoDaConsulta.setDiferencaTempoDeEntrega(dias+" Atra");
 			}else{
-				chamadosDaConsulta.setDiferencaTempoDeEntrega(dias+" Rest");
+				chamadoDaConsulta.setDiferencaTempoDeEntrega(dias+" Rest");
 			}
 		}
 		return contaPendentes;
 	}
 	
-	//ADICIONA APENAS O CALCULO DO ATRAZO EM CADA CHAMADO DA LISTA PASSADA
+	//ADICIONA APENAS O CALCULO DO ATRASO EM CADA CHAMADO DA LISTA PASSADA
 	public List<Chamados> adicionarCalcAtrasoNaLista(List<Chamados> listaChamadosPendentes){
 		List<Chamados> novaLista = new LinkedList<>();
 		int dias = 0;
@@ -142,7 +152,7 @@ public class ChamadosService {
 		
 	}
 	
-	//CALCULA A QUANTIDADE DE DIAS EM ATRAZO DO CHAMADO
+	//CALCULA A QUANTIDADE DE DIAS EM ATRASO DO CHAMADO
 	public int calcularAtraso(Chamados chamado){
 		Calendar dataAtual = Calendar.getInstance();
 		dataAtual.setTime(new Date());
@@ -151,13 +161,13 @@ public class ChamadosService {
 		return dias;
 	}
 	
-	//FILTRA DE UMA LISTA DE CHAMADOS APENAS OS ATRAZADOS
+	//FILTRA DE UMA LISTA DE CHAMADOS APENAS OS ATRASADOS
 	public List<Chamados> filtrarAtrasados(List<Chamados> listaChamadosPendentes){
 		List<Chamados> novaLista = new LinkedList<>();
 		int dias = 0;
 		for(Chamados chamadoDaLista : listaChamadosPendentes){
 			dias = calcularAtraso(chamadoDaLista);
-			if(dias >= 0){
+			if(dias > 0){
 				chamadoDaLista.setDiferencaTempoDeEntrega(dias+" Atra");
 				novaLista.add(chamadoDaLista);
 			}
