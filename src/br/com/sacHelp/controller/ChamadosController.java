@@ -106,12 +106,11 @@ public class ChamadosController {
 		try {
 			Chamados chamadoAnterior = new Chamados();
 			chamadoAnterior = chamadosService.consultarChamadoPorId(chamado.getId());
-			historicoChamadoService.pegarAlteracao(chamadoAnterior, chamado);
+			historicoChamadoService.registrarAlteracao(chamadoAnterior, chamado);
 			chamadosService.editar(chamado);
 			return "redirect:index";
 		} catch (SQLException e) {
 			msg.setMensagemErro(e.getMessage());
-			e.printStackTrace();
 			return "redirect:mostraMensagemChamado";
 		}
 		
@@ -191,6 +190,24 @@ public class ChamadosController {
 			msg.setMensagemErro("Erro ao filtrar chamados: " + e.getMessage());
 			return "redirect:mostraMensagemChamado";
 		}
+	}
+	
+	@RequestMapping("atualizarPrazo")
+	public String atualizarPrazo(Chamados chamadoNovoPrazo){
+		
+		try {
+			Chamados chamadoPrazoAnterior = new Chamados();
+			chamadoPrazoAnterior = chamadosService.consultarChamadoPorId(chamadoNovoPrazo.getId());
+			historicoChamadoService.registrarNovoPrazo(chamadoPrazoAnterior, chamadoNovoPrazo);
+			chamadoPrazoAnterior.setPrazoSolucao(chamadoNovoPrazo.getPrazoSolucao());
+			chamadoNovoPrazo = chamadoPrazoAnterior;
+			chamadosService.editar(chamadoNovoPrazo);
+			return "redirect:index";
+		} catch (SQLException e) {
+			msg.setMensagemErro("Erro ao atualizar prazo: " + e.getMessage());
+			return "redirect:mostraMensagemChamado";
+		}
+		
 	}
 	
 	@RequestMapping("mostraMensagemChamado")

@@ -63,7 +63,7 @@
 			<br><br><br>
 				<div class="col-12 p-1">
 					<br> 
-					<a title="Novo"
+					<a title="Novo" 
 						href="<%=request.getContextPath()%>/novoChamado"
 						class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/Novo5.png">
@@ -77,12 +77,13 @@
 						href="#" class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/Timeline3.png">
 					</a> 
-					<a title="Adicionar Progresso"
+					<a title="Adicionar Progresso" id="linkAddProgresso"
 						href="" data-toggle="modal" data-target="#adicionarProgressoModal"
 						class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/NovoProgresso3.png">
 					</a> 
-					<a title="Finalizar Chamado" href="" data-toggle="modal" data-target="#finalizarChamadoModal"
+					<a title="Finalizar Chamado" id="linkFinalizarChamado"
+						href="" data-toggle="modal" data-target="#finalizarChamadoModal"
 						class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/FinalizarChamado2.png">
 					</a> 
@@ -94,7 +95,8 @@
 						class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/Enviar.png">
 					</a>
-					<a title="Atualizar Prazo" href="" data-toggle="modal" data-target="#atualizarPrazo"
+					<a title="Atualizar Prazo" id="linkAtualizarPrazo"
+						href="" data-toggle="modal" data-target="#atualizarPrazo"
 						class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/NovoPrazo2.png">
 					</a>
@@ -135,8 +137,7 @@
 						</thead>
 						<tbody>
 							<c:forEach items="${listaChamados}" var="chamado">
-								<tr id="linhaTbPendentes${chamado.id}"
-									onclick="pegarIdChamado(this);">
+								<tr id="linhaTbPendentes${chamado.id}">
 									<td>${chamado.id}</td>
 									<td>${chamado.titulo}</td>
 									<td>${chamado.diferencaTempoDeEntrega}</td>
@@ -256,7 +257,7 @@
 				</div>
 				<div class="modal-body">
 					<form class="needs-validation" novalidate
-						action="<%=request.getContextPath()%>/index#"
+						action="<%=request.getContextPath()%>/atualizarPrazo"
 						method="post">
 						<div class="col-md-7 mb-3">
 							<label id="lblIdAtualizarPrazo" for="inputIdAtualizarPrazo">Chamado:
@@ -266,8 +267,8 @@
 						</div>
 						<div class="col-md-8 mb-3">
 							<label for="PrazoSolucao">Novo Prazo</label>
-						<input type="date" name="prazoSolucao" class="form-control" id="PrazoSolucao" required>
-							<div class="invalid-feedback">Informe uma de Prazo Inicial.</div>
+						<input type="date" name="prazoSolucao"  class="form-control" id="PrazoSolucao" required>
+							<div class="invalid-feedback">Informe um Novo Prazo.</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"

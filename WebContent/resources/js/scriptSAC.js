@@ -17,21 +17,16 @@
 })();
 
 
-function pegarIdChamado(linhaClicada){
+$("a").on('click', function(){
 	
-	colunas = linhaClicada.getElementsByTagName('td');
-	idDoChamado = colunas[0].innerText;
-	document.querySelector('#lblIdChamado').innerText = "Chamado: "+idDoChamado;
-	document.querySelector('#inputId').value = idDoChamado;
-	document.querySelector('#btnLinhaDoTempo').href = "http://localhost:8080/SAC/abrirLinhaDoTempo?id="+idDoChamado;
-	document.querySelector('#lblIdChamadoModalFinalizar').innerText = "Chamado: "+idDoChamado;
-	document.querySelector('#inputIdModalFinalizar').value = idDoChamado;
-	document.querySelector('#lblIdAtualizarPrazo').innerText = "Chamado: "+idDoChamado;
-	document.querySelector('#inputIdAtualizarPrazo').value = idDoChamado;
-	
-}
+	if(document.querySelector('#inputId').value == "" && (this.id == "linkAddProgresso" ||
+			this.id == "linkFinalizarChamado" || this.id == "btnLinhaDoTempo" || this.id == "linkAtualizarPrazo")){
+		alert("Selecione um Chamado na lista ao lado.");
+		return false;
+	}
+});
 
-//Função Adiciona cor na linha clicad
+//Função Adiciona cor na linha clicada
 
 var idAnterior = 0;
 
@@ -39,6 +34,14 @@ $("tr").on('click', function () {
 	
 	colunas = this.getElementsByTagName('td'); //Pega as colunas da linha clicada
 	idDoChamado = colunas[0].innerText; //Pega a informção da primeira coluna da linha
+	
+	document.querySelector('#lblIdChamado').innerText = "Chamado: "+idDoChamado;
+	document.querySelector('#inputId').value = idDoChamado;
+	document.querySelector('#btnLinhaDoTempo').href = "http://localhost:8080/SAC/abrirLinhaDoTempo?id="+idDoChamado;
+	document.querySelector('#lblIdChamadoModalFinalizar').innerText = "Chamado: "+idDoChamado;
+	document.querySelector('#inputIdModalFinalizar').value = idDoChamado;
+	document.querySelector('#lblIdAtualizarPrazo').innerText = "Chamado: "+idDoChamado;
+	document.querySelector('#inputIdAtualizarPrazo').value = idDoChamado;
 	
     if(idAnterior == idDoChamado && $(this).hasClass("table-warning")) {//Verifica se é uma linha já clicada e com cor, se sim remove a cor
         $(this).removeClass("table-warning");
@@ -66,12 +69,12 @@ $("tr").on('click', function () {
 
 //
 
-var dataPrazo;
-var dataPrazoFinal;
-var dataAtual;
-var dataAtualFinal;
-
 $('table tr').each(function() {
+	
+	var dataPrazo;
+	var dataPrazoFinal;
+	var dataAtual;
+	var dataAtualFinal;
 	
 	dataPrazo = String($(this).find('td:nth-child(6)').html());
 	dataPrazoFinal = new Date(dataPrazo.split('/').reverse().join('/'));
@@ -89,3 +92,29 @@ $('table tr').each(function() {
 function atualizarPagina(){
 	window.location.reload();
 }
+
+
+$('#PrazoSolucao').on('blur', function () {
+	novoPrazo = document.querySelector('#PrazoSolucao').value;
+	arrayNovoPrazo = novoPrazo.split('-');
+	novoPrazoFormatado = arrayNovoPrazo[2] +'/'+ arrayNovoPrazo[1] +'/'+ arrayNovoPrazo[0]; 
+	dataPrazoFinal = new Date(novoPrazoFormatado.split('/').reverse().join('/'));
+	
+	dataHoje = new Date();
+	dataEmTextoHoje = dataHoje.toLocaleDateString();
+	dataHojeFinal = new Date(dataEmTextoHoje.split('/').reverse().join('/'));
+	
+	diferenca = dataPrazoFinal.getFullYear() - dataHojeFinal.getFullYear();
+		
+	if(dataPrazoFinal < dataHojeFinal){
+		alert('Novo prazo nao pode ser menor que a data atual.');
+		return false;
+	}else if(diferenca > 1){
+		alert('Prazo muito longo.');
+		return false;
+	}else if(dataPrazoFinal == 'Invalid Date'){
+		alert('Informe uma data Valida.');
+		return false;
+	}
+});
+

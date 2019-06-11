@@ -39,7 +39,23 @@ public class HistoricoChamadoService {
 		repHistoricoChamadoDAO.editar(historicoChamado);
 	}
 
-	public void pegarAlteracao(Chamados chamadoAnterior, Chamados chamado) throws SQLException {
+	public void registrarNovoPrazo(Chamados chamadoAnterior, Chamados chamado) throws SQLException {
+		SimpleDateFormat sDFormat = new SimpleDateFormat("HH:mm:ss");
+		DateFormat formatarData = DateFormat.getDateInstance();
+		HistoricoChamado historicoChamado = new HistoricoChamado();
+		historicoChamado.setChamado(chamado);
+		historicoChamado.setOcorrencia("Atualização do prazo. ");
+		historicoChamado.getData().setTime(new Date());
+		historicoChamado.setHora(sDFormat.format(new Date()));
+		
+		historicoChamado.setOcorrencia(historicoChamado.getOcorrencia()+
+				"Anterior: "+formatarData.format(chamadoAnterior.getPrazoSolucao().getTime())+
+				" | Novo Prazo: "+formatarData.format(chamado.getPrazoSolucao().getTime()));
+		
+		adicionar(historicoChamado);
+	}
+	
+	public void registrarAlteracao(Chamados chamadoAnterior, Chamados chamado) throws SQLException {
 		SimpleDateFormat sDFormat = new SimpleDateFormat("HH:mm:ss");
 		DateFormat formatarData = DateFormat.getDateInstance();
 		HistoricoChamado historicoChamado = new HistoricoChamado();

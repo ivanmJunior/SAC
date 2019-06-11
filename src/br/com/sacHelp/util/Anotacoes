@@ -18,7 +18,7 @@ Quem, quando, que horas, o que? OK.
 
 --Reorganizar barra de menus. OK
 
---Criar Alertas.
+--Criar Alertas na index. OK
 
 --Criar rotinas de login.
 
@@ -33,3 +33,5 @@ Quem, quando, que horas, o que? OK.
 
 --Criar rotinas de registro de Lembretes/tarefas fixas.
 --Criar Alertas de Lmbretes.
+
+--Criar Listar por Período data de Abertura e data Fechamento.
