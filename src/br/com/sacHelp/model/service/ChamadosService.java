@@ -73,25 +73,49 @@ public class ChamadosService {
 	}
 	
 	public List<Chamados> consultarPorPrazoSolucaoHoje(Chamados chamado) throws SQLException {
-		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarPorPrazoSolucaoHoje(chamado));
+		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarPorPrazoSolucaoHojeERP(chamado));
 	}
 	
 	public List<Chamados> consultarAbertosOuEmAndamento() throws SQLException{
-		return repChamadosDAO.consultarAbertosOuEmAndamento();
+		return repChamadosDAO.consultarAbertosOuEmAndamentoERP();
 	}
 	
 	public List<Chamados> consultarAbertos() throws SQLException{
-		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarAbertos());
+		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarAbertosERP());
 	}
 	
 	public List<Chamados> consultarEmAndamento() throws SQLException{
-		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarEmAndamento());
+		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarEmAndamentoERP());
 	}
 	
 	//CONSULTA CHAMADOS PENDENTES E FILTRA OS ATRAZADOS
 	public List<Chamados> consultarAtrasados() throws SQLException{
-		return filtrarAtrasados(repChamadosDAO.consultarAbertosOuEmAndamento());
+		return filtrarAtrasados(repChamadosDAO.consultarAbertosOuEmAndamentoERP());
 	}
+	
+	//----------------------------------------------------
+	
+	public List<Chamados> consultarPorPrazoSolucaoHojeTI(Chamados chamado) throws SQLException {
+		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarPorPrazoSolucaoHojeTI(chamado));
+	}
+	
+	public List<Chamados> consultarAbertosOuEmAndamentoTI() throws SQLException{
+		return repChamadosDAO.consultarAbertosOuEmAndamentoTI();
+	}
+	
+	public List<Chamados> consultarAbertosTI() throws SQLException{
+		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarAbertosTI());
+	}
+	
+	public List<Chamados> consultarEmAndamentoTI() throws SQLException{
+		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarEmAndamentoTI());
+	}
+	
+	public List<Chamados> consultarAtrasadosTI() throws SQLException{
+		return filtrarAtrasados(repChamadosDAO.consultarAbertosOuEmAndamentoTI());
+	}
+	
+	//----------------------------------------------------
 	
 	public void editar(Chamados chamado) throws SQLException{
 		repChamadosDAO.editar(chamado);

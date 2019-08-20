@@ -25,18 +25,21 @@ public class HomeController {
 	ChamadosService chamadosService;
 	
 	Mensagem msg = new Mensagem();
+	private static boolean checkAbaIndex;
 	private static ContaPendentes contaPendentes;
 	private static int diasCertificadoDigital;
 	
 	@RequestMapping("index")
 	public String openHome(Model modelo){
 		try {
+			checkAbaIndex = true;
 			List<Chamados> listaChamados = chamadosService.consultarAbertosOuEmAndamento();
 			contaPendentes = chamadosService.contarChamadosPendentes(listaChamados);
 			diasCertificadoDigital = calcularValidadeCertificado();
 			modelo.addAttribute("listaChamados", listaChamados);
 			modelo.addAttribute("contaPendentes", contaPendentes);
 			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
+			modelo.addAttribute("checkAbaIndex", checkAbaIndex);
 			return "index";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
@@ -103,6 +106,88 @@ public class HomeController {
 			return "redirect:mostraMensagemChamado";
 		}
 	}
+	
+	//----------------------------------------------------------------------------------
+	
+	@RequestMapping("indexTI")
+	public String openHomeTI(Model modelo){
+		try {
+			checkAbaIndex = false;;
+			List<Chamados> listaChamados = chamadosService.consultarAbertosOuEmAndamentoTI();
+			contaPendentes = chamadosService.contarChamadosPendentes(listaChamados);
+			diasCertificadoDigital = calcularValidadeCertificado();
+			modelo.addAttribute("listaChamados", listaChamados);
+			modelo.addAttribute("contaPendentes", contaPendentes);
+			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
+			modelo.addAttribute("checkAbaIndex", checkAbaIndex);
+			return "index";
+		} catch (SQLException e) {
+			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
+			return "redirect:mostraMensagemChamado";
+		}
+	}
+	
+	@RequestMapping("indexAbertosTI")
+	public String openHomeAbertosTI(Model modelo){
+		try {
+			List<Chamados> listaChamados = chamadosService.consultarAbertosTI();
+			modelo.addAttribute("listaChamados", listaChamados);
+			modelo.addAttribute("contaPendentes", contaPendentes);
+			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
+			return "index";
+		} catch (SQLException e) {
+			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
+			return "redirect:mostraMensagemChamado";
+		}
+	}
+	
+	@RequestMapping("indexEmAndamentoTI")
+	public String openHomeEmAndamentoTI(Model modelo){
+		try {
+			List<Chamados> listaChamados = chamadosService.consultarEmAndamentoTI();
+			modelo.addAttribute("listaChamados", listaChamados);
+			modelo.addAttribute("contaPendentes", contaPendentes);
+			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
+			return "index";
+		} catch (SQLException e) {
+			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
+			return "redirect:mostraMensagemChamado";
+		}
+	}
+	
+	
+	@RequestMapping("indexAtrasadosTI")
+	public String openHomeAtrasadosTI(Model modelo){
+		try {
+			List<Chamados> listaChamados = chamadosService.consultarAtrasadosTI();
+			modelo.addAttribute("listaChamados", listaChamados);
+			modelo.addAttribute("contaPendentes", contaPendentes);
+			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
+			return "index";
+		} catch (SQLException e) {
+			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
+			return "redirect:mostraMensagemChamado";
+		}
+	}
+	
+	
+	@RequestMapping("indexPraHojeTI")
+	public String openHomePrazoSolucaoPraHojeTI(Model modelo){
+		try {
+			Chamados chamado = new Chamados();
+			chamado.setPrazoSolucao(new GregorianCalendar());
+			List<Chamados> listaChamados = chamadosService.consultarPorPrazoSolucaoHojeTI(chamado);
+			modelo.addAttribute("listaChamados", listaChamados);
+			modelo.addAttribute("contaPendentes", contaPendentes);
+			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
+			return "index";
+		} catch (SQLException e) {
+			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
+			return "redirect:mostraMensagemChamado";
+		}
+	}
+	
+	//----------------------------------------------------------------------------------
 	
 	
 	//CALCULA QUANTOS DIAS RESTA PARA O VENCIMENTO DO CERTIFICADO DIGITAL DA PORTOLIVRE COM BASE NA DATA INFORMADA.

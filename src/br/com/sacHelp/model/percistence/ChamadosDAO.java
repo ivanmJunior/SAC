@@ -21,6 +21,8 @@ public class ChamadosDAO implements IRepositorioChamados {
 	@PersistenceContext
 	private EntityManager manager;
 	
+	private SimpleDateFormat sdfFomatarData = new SimpleDateFormat("yyyy-MM-dd");
+	
 	@Override
 	public void adicionar(Chamados chamado) {
 		manager.persist(chamado);
@@ -58,25 +60,25 @@ public class ChamadosDAO implements IRepositorioChamados {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Chamados> consultarAbertosOuEmAndamento() throws SQLException {
+	public List<Chamados> consultarAbertosOuEmAndamentoERP() throws SQLException {
 		List<Chamados> listaDaConsulta = null;
-		listaDaConsulta = manager.createQuery("select c from Chamados as c where c.status='ABERTO' or c.status='EM ANDAMENTO' order by c.id desc").getResultList();
+		listaDaConsulta = manager.createQuery("select c from Chamados as c where (c.status='ABERTO' or c.status='EM ANDAMENTO') and c.setorResponsavel = 'BM' order by c.id desc").getResultList();
 		return listaDaConsulta;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Chamados> consultarAbertos() throws SQLException {
+	public List<Chamados> consultarAbertosERP() throws SQLException {
 		List<Chamados> listaDaConsulta = null;
-		listaDaConsulta = manager.createQuery("select c from Chamados as c where c.status='ABERTO' order by c.id desc").getResultList();
+		listaDaConsulta = manager.createQuery("select c from Chamados as c where c.status='ABERTO' and c.setorResponsavel = 'BM' order by c.id desc").getResultList();
 		return listaDaConsulta;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Chamados> consultarEmAndamento() throws SQLException {
+	public List<Chamados> consultarEmAndamentoERP() throws SQLException {
 		List<Chamados> listaDaConsulta = null;
-		listaDaConsulta = manager.createQuery("select c from Chamados as c where c.status='EM ANDAMENTO' order by c.id desc").getResultList();
+		listaDaConsulta = manager.createQuery("select c from Chamados as c where c.status='EM ANDAMENTO' and c.setorResponsavel = 'BM' order by c.id desc").getResultList();
 		return listaDaConsulta;
 	}
 
@@ -99,11 +101,45 @@ public class ChamadosDAO implements IRepositorioChamados {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Chamados> consultarPorPrazoSolucaoHoje(Chamados chamado) throws SQLException {
-		SimpleDateFormat sdfFomatarData = new SimpleDateFormat("yyyy-MM-dd");
+	public List<Chamados> consultarPorPrazoSolucaoHojeERP(Chamados chamado) throws SQLException {
 		List<Chamados> listaDaConsulta = null;
-		listaDaConsulta = manager.createQuery("select c from Chamados as c where c.prazoSolucao = '"+
-				sdfFomatarData.format(chamado.getPrazoSolucao().getTime())+"' and c.status<>'FINALIZADO'").getResultList(); 
+		listaDaConsulta = manager.createQuery("select c from Chamados as c where (c.prazoSolucao = '"+
+				sdfFomatarData.format(chamado.getPrazoSolucao().getTime())+"' and c.status<>'FINALIZADO') and c.setorResponsavel = 'BM'").getResultList(); 
+		return listaDaConsulta;
+	}
+
+	//Metodo para tela TI
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Chamados> consultarPorPrazoSolucaoHojeTI(Chamados chamado) throws SQLException {
+		List<Chamados> listaDaConsulta = null;
+		listaDaConsulta = manager.createQuery("select c from Chamados as c where (c.prazoSolucao = '"+
+				sdfFomatarData.format(chamado.getPrazoSolucao().getTime())+"' and c.status<>'FINALIZADO') and c.setorResponsavel <> 'BM'").getResultList(); 
+		return listaDaConsulta;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Chamados> consultarAbertosOuEmAndamentoTI() throws SQLException {
+		List<Chamados> listaDaConsulta = null;
+		listaDaConsulta = manager.createQuery("select c from Chamados as c where (c.status='ABERTO' or c.status='EM ANDAMENTO') and c.setorResponsavel <> 'BM' order by c.id desc").getResultList();
+		return listaDaConsulta;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Chamados> consultarAbertosTI() throws SQLException {
+		List<Chamados> listaDaConsulta = null;
+		listaDaConsulta = manager.createQuery("select c from Chamados as c where c.status='ABERTO' and c.setorResponsavel <> 'BM' order by c.id desc").getResultList();
+		return listaDaConsulta;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Chamados> consultarEmAndamentoTI() throws SQLException {
+		List<Chamados> listaDaConsulta = null;
+		listaDaConsulta = manager.createQuery("select c from Chamados as c where c.status='EM ANDAMENTO' and c.setorResponsavel <> 'BM' order by c.id desc").getResultList();
 		return listaDaConsulta;
 	}
 

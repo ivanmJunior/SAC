@@ -22,6 +22,9 @@
 	href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css"
 	rel="stylesheet">
 	<link
+	href="<%=request.getContextPath()%>/resources/css/bootstrap-datetimepicker.min.css"
+	rel="stylesheet">
+	<link
 	href="<%=request.getContextPath()%>/resources/css/sticky-footer-navbar.css"
 	rel="stylesheet">
 <title>SAC - Home</title>
@@ -32,32 +35,63 @@
 			<jsp:include page="/WEB-INF/views/navBarDarkCorporation.jsp"></jsp:include>
 			<br><br>
 			<div class="row">
-				<div class="col"></div>
+				<div class="col"><input type="checkbox" name="vehicle3" id="checkAbas"
+				value="${checkAbaIndex}"	${checkAbaIndex?	'checked'	:	''	}> I have a boat<br></div>
 				<div class="col">
 					<div class="p-2 mb-3 bg-danger text-white">
-						<h3 class="mt-3">
-						<a href="<%=request.getContextPath()%>/index" class="btn btn-danger">
-							Chamados Pendentes <span class="badge badge-light">${contaPendentes.totalPendentes}</span>
-						</a>	
-							<a href="<%=request.getContextPath()%>/indexAbertos" class="btn btn-danger">
-								Abertos <span class="badge badge-light">${contaPendentes.qtdAbertos}</span>
-							</a>
-							<a href="<%=request.getContextPath()%>/indexEmAndamento" class="btn btn-danger">
-								Em Andamento <span class="badge badge-light">${contaPendentes.qtdEmAndamento}</span>
-							</a>
-							<a href="<%=request.getContextPath()%>/indexAtrasados" class="btn btn-danger">
-								Atrasados <span class="badge badge-light">${contaPendentes.qtdAtrasados}</span>
-							</a>
-							<a href="<%=request.getContextPath()%>/indexPraHoje" class="btn btn-danger">
-								Pra Hoje <span class="badge badge-light">${contaPendentes.qtdPrazoPraHoje}</span>
-							</a>
-						</h3>
+						<ul class="nav nav-tabs" id="myTab" role="tablist">
+						  <li class="nav-item" id="ERP">
+						    <a class="nav-link text-white" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">ERP</a>
+						  </li>
+						  <li class="nav-item" id="Internos">
+						    <a class="nav-link text-white" id="profile-tab" data-toggle="tab" href="#perfil" role="tab" aria-controls="profile" aria-selected="false">Internos</a>
+						  </li>
+						</ul>
+						<div class="tab-content" id="myTabContent">
+					  		<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+							  	<h3 class="mt-3">
+									<a href="<%=request.getContextPath()%>/index" class="btn btn-danger">
+										Chamados Pendentes <span class="badge badge-light">${contaPendentes.totalPendentes}</span>
+									</a>	
+									<a href="<%=request.getContextPath()%>/indexAbertos" class="btn btn-danger">
+										Abertos <span class="badge badge-light">${contaPendentes.qtdAbertos}</span>
+									</a>
+									<a href="<%=request.getContextPath()%>/indexEmAndamento" class="btn btn-danger">
+										Em Andamento <span class="badge badge-light">${contaPendentes.qtdEmAndamento}</span>
+									</a>
+									<a href="<%=request.getContextPath()%>/indexAtrasados" class="btn btn-danger">
+										Atrasados <span class="badge badge-light">${contaPendentes.qtdAtrasados}</span>
+									</a>
+									<a href="<%=request.getContextPath()%>/indexPraHoje" class="btn btn-danger">
+										Pra Hoje <span class="badge badge-light">${contaPendentes.qtdPrazoPraHoje}</span>
+									</a>
+								</h3>
+					   		</div>
+  					   		<div class="tab-pane fade" id="perfil" role="tabpanel" aria-labelledby="profile-tab">
+  					   			<h3 class="mt-3">
+									<a href="<%=request.getContextPath()%>/indexTI" class="btn btn-danger">
+										Chamados Pendentes <span class="badge badge-light">${contaPendentes.totalPendentes}</span>
+									</a>	
+									<a href="<%=request.getContextPath()%>/indexAbertosTI" class="btn btn-danger">
+										Abertos <span class="badge badge-light">${contaPendentes.qtdAbertos}</span>
+									</a>
+									<a href="<%=request.getContextPath()%>/indexEmAndamentoTI" class="btn btn-danger">
+										Em Andamento <span class="badge badge-light">${contaPendentes.qtdEmAndamento}</span>
+									</a>
+									<a href="<%=request.getContextPath()%>/indexAtrasadosTI" class="btn btn-danger">
+										Atrasados <span class="badge badge-light">${contaPendentes.qtdAtrasados}</span>
+									</a>
+									<a href="<%=request.getContextPath()%>/indexPraHojeTI" class="btn btn-danger">
+										Pra Hoje <span class="badge badge-light">${contaPendentes.qtdPrazoPraHoje}</span>
+									</a>
+								</h3>
+  					   		</div>
+						</div>
 					</div>
 				</div>
-				
 			</div>
 		</div>
-		<br> <br> <br>
+		<br> <br> <br> <br>
 		<div class="row">
 			<div class="col-6">
 			<br><br><br>
@@ -100,19 +134,19 @@
 						class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/NovoPrazo2.png">
 					</a>
-					<a title="Atualizar Prazo" href="<%=request.getContextPath()%>/index"
+					<a title="Eliminar Chamado" href="<%=request.getContextPath()%>/index"
 						class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/Eliminar.png">
 					</a>
-					<a title="Atualizar Prazo" href="<%=request.getContextPath()%>/index"
+					<a title="Criar lembrete" href="" data-toggle="modal" data-target="#addLembrete"
 						class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/semFuncao.png">
 					</a>
-					<a title="Atualizar Prazo" href="<%=request.getContextPath()%>/index"
+					<a title="Sem Função" href="<%=request.getContextPath()%>/index"
 						class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/semFuncao.png">
 					</a>
-					<a title="Atualizar Prazo" href="<%=request.getContextPath()%>/index"
+					<a title="Sem Função" href="<%=request.getContextPath()%>/index"
 						class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/semFuncao.png">
 					</a>
@@ -273,7 +307,57 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal" onclick="atualizarPagina();">Fechar</button>
-							<button type="submit" class="btn btn-success">Finalizar</button>
+							<button type="submit" class="btn btn-success">Atualizar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal Lembrete -->
+	
+	<div class="modal fade " id="addLembrete" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Lembrete</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close" onclick="atualizarPagina();">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form class="needs-validation" novalidate
+						action="<%=request.getContextPath()%>/index#"
+						method="post">
+
+						<div class=row>
+						<div class="col-md-12 mb-3">
+							<label for="descricaoLembrete">Descrição</label>
+							<textarea name="solucao" class="form-control"
+								id="descricaoLembrete" placeholder="O que deseja lembrar?"
+								rows="2" required></textarea>
+							<div class="invalid-feedback">A descrição é obrigatória.</div>
+						</div>
+						</div>
+						<div class=row>
+						<div class="col-md-6 mb-3">
+							<label for="data">Data</label>
+						<input type="date" name="data"  class="form-control" id="data" required>
+							<div class="invalid-feedback">Informe uma data.</div>
+						</div>
+						<div class="col-md-6 mb-3">
+							<label for="data">Hora</label>
+						<input type="time" name="data"  class="form-control" id="data" required>
+							<div class="invalid-feedback">Informe a hora.</div>
+						</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal" onclick="atualizarPagina();">Fechar</button>
+							<button type="submit" class="btn btn-success">Salvar</button>
 						</div>
 					</form>
 				</div>
@@ -286,9 +370,10 @@
 	    <span class="text-danger font-weight-bold">Certificado Digital Vence Em: ${certificadoValidade} dias.</span>
 	  </div>
 	</footer>
+	
 	<script src="<%=request.getContextPath()%>/resources/js/jquery.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/resources/js/bootstrap.min.js"></script>
+	<script	src="<%=request.getContextPath()%>/resources/js/bootstrap.min.js"></script>
+	<script	src="<%=request.getContextPath()%>/resources/js/bootstrap-datetimepicker.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/js/scriptSAC.js"></script>
 </body>
 </html>

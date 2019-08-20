@@ -1,8 +1,24 @@
+
 (function() {
   'use strict';
   window.addEventListener('load', function() {
     // Busque todos os formulÃ¡rios que queremos aplicar estilos de validaÃ§Ã£o Bootstrap personalizados para
-    var forms = document.getElementsByClassName('needs-validation');
+	  
+	 /* if(document.querySelector('#checkAbas').checked){
+		  $('#home-tab').addClass('active text-danger'); // Inicializa a ERP ativada e com texto vermelho na index
+		  console.log('verdade');
+	  }else{
+		  $('#profile-tab').addClass('active text-danger'); // Inicializa a ERP ativada e com texto vermelho na index
+		  console.log('Falso');
+	  }
+	  $.ajax({
+			type: "GET",
+			url: "indexTI",
+			success: function(response) {
+				console.log(response);
+			}
+		});*/
+	  var forms = document.getElementsByClassName('needs-validation');
     // FaÃ§a um loop sobre eles e impeÃ§a a submissÃ£o
     var validation = Array.prototype.filter.call(forms, function(form) {
       form.addEventListener('submit', function(event) {
@@ -18,7 +34,6 @@
 
 
 $("a").on('click', function(){
-	
 	if(document.querySelector('#inputId').value == "" && (this.id == "linkAddProgresso" ||
 			this.id == "linkFinalizarChamado" || this.id == "btnLinhaDoTempo" || this.id == "linkAtualizarPrazo")){
 		alert("Selecione um Chamado na lista ao lado.");
@@ -27,7 +42,6 @@ $("a").on('click', function(){
 });
 
 //Função Adiciona cor na linha clicada
-
 var idAnterior = 0;
 
 $("tr").on('click', function () {
@@ -67,7 +81,7 @@ $("tr").on('click', function () {
 });
 
 
-//
+//Adiciona uma cor de nas linhas onde o chamado está em atraso.
 
 $('table tr').each(function() {
 	
@@ -89,11 +103,12 @@ $('table tr').each(function() {
 	
 });
 
+//Atualiza a página
 function atualizarPagina(){
 	window.location.reload();
 }
 
-
+//Valida o novo prazo informado
 $('#PrazoSolucao').on('blur', function () {
 	novoPrazo = document.querySelector('#PrazoSolucao').value;
 	arrayNovoPrazo = novoPrazo.split('-');
@@ -118,3 +133,36 @@ $('#PrazoSolucao').on('blur', function () {
 	}
 });
 
+$(function() {
+    $('#datetimepicker3').datetimepicker({
+      pickDate: false
+    });
+  });
+
+//Adiciona e remove a cor do texto das abas na index
+$('.nav-link').on('click', function(){
+	if(this.id == "home-tab"){
+		$('#home-tab').addClass('text-danger');
+		$('#profile-tab').removeClass('text-danger');
+		
+		$.get("index");
+		
+	}
+	if(this.id == "profile-tab"){
+		$('#profile-tab').addClass('text-danger');
+		$('#home-tab').removeClass('text-danger');
+		
+		$.get("indexTI");	
+	}
+});
+/*
+$('.nav-item').on('click', function(){
+	if(this.id == "ERP"){
+		$.get("index");
+		console.log('clique ERP.');
+	}
+	if(this.id == "Internos"){
+		$.get("indexTI");
+		console.log('clique Interno.');
+	}
+});*/
