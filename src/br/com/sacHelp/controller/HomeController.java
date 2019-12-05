@@ -25,7 +25,7 @@ public class HomeController {
 	ChamadosService chamadosService;
 	
 	Mensagem msg = new Mensagem();
-	private static boolean checkAbaIndex;
+	public static boolean checkAbaIndex;
 	private static ContaPendentes contaPendentes;
 	private static int diasCertificadoDigital;
 	
@@ -50,10 +50,12 @@ public class HomeController {
 	@RequestMapping("indexAbertos")
 	public String openHomeAbertos(Model modelo){
 		try {
+			checkAbaIndex = true;
 			List<Chamados> listaChamados = chamadosService.consultarAbertos();
 			modelo.addAttribute("listaChamados", listaChamados);
 			modelo.addAttribute("contaPendentes", contaPendentes);
 			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
+			modelo.addAttribute("checkAbaIndex", checkAbaIndex);
 			return "index";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
@@ -64,10 +66,12 @@ public class HomeController {
 	@RequestMapping("indexEmAndamento")
 	public String openHomeEmAndamento(Model modelo){
 		try {
+			checkAbaIndex = true;
 			List<Chamados> listaChamados = chamadosService.consultarEmAndamento();
 			modelo.addAttribute("listaChamados", listaChamados);
 			modelo.addAttribute("contaPendentes", contaPendentes);
 			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
+			modelo.addAttribute("checkAbaIndex", checkAbaIndex);
 			return "index";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
@@ -79,10 +83,12 @@ public class HomeController {
 	@RequestMapping("indexAtrasados")
 	public String openHomeAtrasados(Model modelo){
 		try {
+			checkAbaIndex = true;
 			List<Chamados> listaChamados = chamadosService.consultarAtrasados();
 			modelo.addAttribute("listaChamados", listaChamados);
 			modelo.addAttribute("contaPendentes", contaPendentes);
 			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
+			modelo.addAttribute("checkAbaIndex", checkAbaIndex);
 			return "index";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
@@ -94,12 +100,14 @@ public class HomeController {
 	@RequestMapping("indexPraHoje")
 	public String openHomePrazoSolucaoPraHoje(Model modelo){
 		try {
+			checkAbaIndex = true;
 			Chamados chamado = new Chamados();
 			chamado.setPrazoSolucao(new GregorianCalendar());
 			List<Chamados> listaChamados = chamadosService.consultarPorPrazoSolucaoHoje(chamado);
 			modelo.addAttribute("listaChamados", listaChamados);
 			modelo.addAttribute("contaPendentes", contaPendentes);
 			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
+			modelo.addAttribute("checkAbaIndex", checkAbaIndex);
 			return "index";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
@@ -112,7 +120,7 @@ public class HomeController {
 	@RequestMapping("indexTI")
 	public String openHomeTI(Model modelo){
 		try {
-			checkAbaIndex = false;;
+			checkAbaIndex = false;
 			List<Chamados> listaChamados = chamadosService.consultarAbertosOuEmAndamentoTI();
 			contaPendentes = chamadosService.contarChamadosPendentes(listaChamados);
 			diasCertificadoDigital = calcularValidadeCertificado();
@@ -130,10 +138,12 @@ public class HomeController {
 	@RequestMapping("indexAbertosTI")
 	public String openHomeAbertosTI(Model modelo){
 		try {
+			checkAbaIndex = false;
 			List<Chamados> listaChamados = chamadosService.consultarAbertosTI();
 			modelo.addAttribute("listaChamados", listaChamados);
 			modelo.addAttribute("contaPendentes", contaPendentes);
 			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
+			modelo.addAttribute("checkAbaIndex", checkAbaIndex);
 			return "index";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
@@ -144,10 +154,12 @@ public class HomeController {
 	@RequestMapping("indexEmAndamentoTI")
 	public String openHomeEmAndamentoTI(Model modelo){
 		try {
+			checkAbaIndex = false;
 			List<Chamados> listaChamados = chamadosService.consultarEmAndamentoTI();
 			modelo.addAttribute("listaChamados", listaChamados);
 			modelo.addAttribute("contaPendentes", contaPendentes);
 			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
+			modelo.addAttribute("checkAbaIndex", checkAbaIndex);
 			return "index";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
@@ -159,10 +171,12 @@ public class HomeController {
 	@RequestMapping("indexAtrasadosTI")
 	public String openHomeAtrasadosTI(Model modelo){
 		try {
+			checkAbaIndex = false;
 			List<Chamados> listaChamados = chamadosService.consultarAtrasadosTI();
 			modelo.addAttribute("listaChamados", listaChamados);
 			modelo.addAttribute("contaPendentes", contaPendentes);
 			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
+			modelo.addAttribute("checkAbaIndex", checkAbaIndex);
 			return "index";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());
@@ -174,12 +188,14 @@ public class HomeController {
 	@RequestMapping("indexPraHojeTI")
 	public String openHomePrazoSolucaoPraHojeTI(Model modelo){
 		try {
+			checkAbaIndex = false;
 			Chamados chamado = new Chamados();
 			chamado.setPrazoSolucao(new GregorianCalendar());
 			List<Chamados> listaChamados = chamadosService.consultarPorPrazoSolucaoHojeTI(chamado);
 			modelo.addAttribute("listaChamados", listaChamados);
 			modelo.addAttribute("contaPendentes", contaPendentes);
 			modelo.addAttribute("certificadoValidade", diasCertificadoDigital);
+			modelo.addAttribute("checkAbaIndex", checkAbaIndex);
 			return "index";
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao listar chamados: " + e.getMessage());

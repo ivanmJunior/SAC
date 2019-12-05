@@ -35,16 +35,16 @@
 			<jsp:include page="/WEB-INF/views/navBarDarkCorporation.jsp"></jsp:include>
 			<br><br>
 			<div class="row">
-				<div class="col"><input type="checkbox" name="vehicle3" id="checkAbas"
-				value="${checkAbaIndex}"	${checkAbaIndex?	'checked'	:	''	}> I have a boat<br></div>
+				<div class="col"><input type="checkbox" name="vehicle3" id="checkAbas" hidden="true"
+				value="${checkAbaIndex}"	${checkAbaIndex?	'checked'	:	''	}><br></div> <!-- FLAG ABAS -->
 				<div class="col">
 					<div class="p-2 mb-3 bg-danger text-white">
 						<ul class="nav nav-tabs" id="myTab" role="tablist">
-						  <li class="nav-item" id="ERP">
-						    <a class="nav-link text-white" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">ERP</a>
+						  <li class="nav-item" id="ERP" >
+						    <a class="nav-link text-white" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true" >ERP</a>
 						  </li>
-						  <li class="nav-item" id="Internos">
-						    <a class="nav-link text-white" id="profile-tab" data-toggle="tab" href="#perfil" role="tab" aria-controls="profile" aria-selected="false">Internos</a>
+						  <li class="nav-item" id="Internos" >
+						    <a class="nav-link text-white" id="profile-tab" data-toggle="tab" href="#perfil" role="tab" aria-controls="home" aria-selected="false">Internos</a>
 						  </li>
 						</ul>
 						<div class="tab-content" id="myTabContent">
@@ -67,7 +67,7 @@
 									</a>
 								</h3>
 					   		</div>
-  					   		<div class="tab-pane fade" id="perfil" role="tabpanel" aria-labelledby="profile-tab">
+  					   		<div class="tab-pane fade show active" id="perfil" role="tabpanel" aria-labelledby="profile-tab">
   					   			<h3 class="mt-3">
 									<a href="<%=request.getContextPath()%>/indexTI" class="btn btn-danger">
 										Chamados Pendentes <span class="badge badge-light">${contaPendentes.totalPendentes}</span>
@@ -97,7 +97,7 @@
 			<br><br><br>
 				<div class="col-12 p-1">
 					<br> 
-					<a title="Novo" 
+					<a title="Novo"  
 						href="<%=request.getContextPath()%>/novoChamado"
 						class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/Novo5.png">
@@ -157,7 +157,7 @@
 			<div class="col-6">
 				<br> <br> <br>
 				<div style="overflow: auto; width: 720px; height: 440px;">
-					<table id="tbPendentes" class="table table-hover">
+					<table id="tbPendentes" class="table table-hover" >
 						<thead>
 							<tr>
 								<th scope="col">Id</th>
@@ -372,8 +372,9 @@
 	</footer>
 	
 	<script src="<%=request.getContextPath()%>/resources/js/jquery.min.js"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/scriptSAC.js"></script>
 	<script	src="<%=request.getContextPath()%>/resources/js/bootstrap.min.js"></script>
 	<script	src="<%=request.getContextPath()%>/resources/js/bootstrap-datetimepicker.min.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/js/scriptSAC.js"></script>
+
 </body>
 </html>

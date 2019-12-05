@@ -1,23 +1,23 @@
+$(document).ready(function() {
+	
+	if(document.querySelector('#checkAbas').checked){
+		  $(document.querySelector('#perfil')).prop("hidden", true);
+		  $(document.querySelector('#home')).prop("hidden", false);
+		  $('#profile-tab').addClass('text-black-50');
+		  $('#home-tab').removeClass('text-black-50');
+	
+	}else if(!document.querySelector('#checkAbas').checked){
+		  $(document.querySelector('#home')).prop("hidden", true);
+		  $(document.querySelector('#perfil')).prop("hidden", false);
+		  $('#home-tab').addClass('text-black-50');
+		  $('#profile-tab').removeClass('text-black-50');
+	}
+});
 
 (function() {
   'use strict';
   window.addEventListener('load', function() {
     // Busque todos os formulÃ¡rios que queremos aplicar estilos de validaÃ§Ã£o Bootstrap personalizados para
-	  
-	 /* if(document.querySelector('#checkAbas').checked){
-		  $('#home-tab').addClass('active text-danger'); // Inicializa a ERP ativada e com texto vermelho na index
-		  console.log('verdade');
-	  }else{
-		  $('#profile-tab').addClass('active text-danger'); // Inicializa a ERP ativada e com texto vermelho na index
-		  console.log('Falso');
-	  }
-	  $.ajax({
-			type: "GET",
-			url: "indexTI",
-			success: function(response) {
-				console.log(response);
-			}
-		});*/
 	  var forms = document.getElementsByClassName('needs-validation');
     // FaÃ§a um loop sobre eles e impeÃ§a a submissÃ£o
     var validation = Array.prototype.filter.call(forms, function(form) {
@@ -30,8 +30,7 @@
       }, false);
     });
   }, false);
-})();
-
+})();
 
 $("a").on('click', function(){
 	if(document.querySelector('#inputId').value == "" && (this.id == "linkAddProgresso" ||
@@ -80,8 +79,7 @@ $("tr").on('click', function () {
     }
 });
 
-
-//Adiciona uma cor de nas linhas onde o chamado está em atraso.
+//Adiciona uma cor de nas linhas para cada linha onde o chamado está em atraso.
 
 $('table tr').each(function() {
 	
@@ -142,27 +140,13 @@ $(function() {
 //Adiciona e remove a cor do texto das abas na index
 $('.nav-link').on('click', function(){
 	if(this.id == "home-tab"){
-		$('#home-tab').addClass('text-danger');
-		$('#profile-tab').removeClass('text-danger');
-		
-		$.get("index");
-		
+		window.location.href="http://localhost:8080/SAC/index";
+		$('#home-tab').addClass('text-black-50');
+		 
 	}
 	if(this.id == "profile-tab"){
-		$('#profile-tab').addClass('text-danger');
-		$('#home-tab').removeClass('text-danger');
-		
-		$.get("indexTI");	
+		window.location.href="http://localhost:8080/SAC/indexTI";
+		$('#profile-tab').addClass('text-black-50');
 	}
 });
-/*
-$('.nav-item').on('click', function(){
-	if(this.id == "ERP"){
-		$.get("index");
-		console.log('clique ERP.');
-	}
-	if(this.id == "Internos"){
-		$.get("indexTI");
-		console.log('clique Interno.');
-	}
-});*/
+

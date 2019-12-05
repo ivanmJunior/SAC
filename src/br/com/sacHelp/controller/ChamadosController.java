@@ -31,6 +31,9 @@ public class ChamadosController {
 	ChamadosService chamadosService;
 	
 	@Autowired
+	HomeController homeController;
+	
+	@Autowired
 	HistoricoChamadoService historicoChamadoService;
 	
 	Mensagem msg = new Mensagem();
@@ -64,7 +67,11 @@ public class ChamadosController {
 		try {
 			chamadosService.adicionar(chamado);
 			
-			return "redirect:index";
+			if(HomeController.checkAbaIndex){
+				return "redirect:index";
+			}else{
+				return "redirect:indexTI";
+			}
 		} catch (PrazoInvadoException | CampoVazioException | SQLException e) {
 			msg.setMensagemErro(e.getMessage());
 			return "redirect:mostraMensagemChamado";
@@ -108,7 +115,11 @@ public class ChamadosController {
 			chamadoAnterior = chamadosService.consultarChamadoPorId(chamado.getId());
 			historicoChamadoService.registrarAlteracao(chamadoAnterior, chamado);
 			chamadosService.editar(chamado);
-			return "redirect:index";
+			if(HomeController.checkAbaIndex){
+				return "redirect:index";
+			}else{
+				return "redirect:indexTI";
+			}
 		} catch (SQLException e) {
 			msg.setMensagemErro(e.getMessage());
 			return "redirect:mostraMensagemChamado";
@@ -155,7 +166,11 @@ public class ChamadosController {
 			
 			chamadosService.editar(chamadoDaConsulta);
 			historicoChamadoService.adicionar(historicoChamado);
-			return "redirect:index";
+			if(HomeController.checkAbaIndex){
+				return "redirect:index";
+			}else{
+				return "redirect:indexTI";
+			}
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao Finalizar: "+e.getMessage());
 			return "redirect:mostraMensagemChamado";
@@ -202,7 +217,11 @@ public class ChamadosController {
 			chamadoPrazoAnterior.setPrazoSolucao(chamadoNovoPrazo.getPrazoSolucao());
 			chamadoNovoPrazo = chamadoPrazoAnterior;
 			chamadosService.editar(chamadoNovoPrazo);
-			return "redirect:index";
+			if(HomeController.checkAbaIndex){
+				return "redirect:index";
+			}else{
+				return "redirect:indexTI";
+			}
 		} catch (SQLException e) {
 			msg.setMensagemErro("Erro ao atualizar prazo: " + e.getMessage());
 			return "redirect:mostraMensagemChamado";
