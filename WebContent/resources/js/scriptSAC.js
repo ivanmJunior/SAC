@@ -34,7 +34,8 @@ $(document).ready(function() {
 
 $("a").on('click', function(){
 	if(document.querySelector('#inputId').value == "" && (this.id == "linkAddProgresso" ||
-			this.id == "linkFinalizarChamado" || this.id == "btnLinhaDoTempo" || this.id == "linkAtualizarPrazo")){
+			this.id == "linkFinalizarChamado" || this.id == "btnLinhaDoTempo" ||
+			this.id == "linkAtualizarPrazo" || this.id == "linkAtualizarStatus")){
 		alert("Selecione um Chamado na lista ao lado.");
 		return false;
 	}
@@ -55,6 +56,8 @@ $("tr").on('click', function () {
 	document.querySelector('#inputIdModalFinalizar').value = idDoChamado;
 	document.querySelector('#lblIdAtualizarPrazo').innerText = "Chamado: "+idDoChamado;
 	document.querySelector('#inputIdAtualizarPrazo').value = idDoChamado;
+	document.querySelector('#lblIdAtualizarStatus').innerText = "Chamado: "+idDoChamado;
+	document.querySelector('#inputIdAtualizarStatus').value = idDoChamado;
 	
     if(idAnterior == idDoChamado && $(this).hasClass("table-warning")) {//Verifica se é uma linha já clicada e com cor, se sim remove a cor
         $(this).removeClass("table-warning");
@@ -65,7 +68,9 @@ $("tr").on('click', function () {
     	document.querySelector('#inputIdModalFinalizar').value = '';
     	document.querySelector('#lblIdAtualizarPrazo').innerText = "Chamado: ";
     	document.querySelector('#inputIdAtualizarPrazo').value = '';
-     
+    	document.querySelector('#lblIdAtualizarStatus').innerText = "Chamado: ";
+    	document.querySelector('#inputIdAtualizarStatus').value = '';
+    	
     	//verifica se uma linha anterior foi clicada e tem cor, se sim remove a cor e adiciona na nova linha   
     } else if(idAnterior != 0 && $('#linhaTbPendentes'+idAnterior).hasClass("table-warning")){
     	$('#linhaTbPendentes'+idAnterior).removeClass("table-warning");

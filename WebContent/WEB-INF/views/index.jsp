@@ -132,17 +132,18 @@
 					<a title="Atualizar Prazo" id="linkAtualizarPrazo"
 						href="" data-toggle="modal" data-target="#atualizarPrazo"
 						class="btn btn-light"> <img alt="" width="145px"
-						src="<%=request.getContextPath()%>/resources/imagens/NovoPrazo2.png">
+						src="<%=request.getContextPath()%>/resources/imagens/atualizarPrazo4.png">
 					</a>
 					<a title="Eliminar Chamado" href="<%=request.getContextPath()%>/index"
 						class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/Eliminar.png">
 					</a>
-					<a title="Criar lembrete" href="" data-toggle="modal" data-target="#addLembrete"
+					<a title="Atualizar Status" id="linkAtualizarStatus"
+						href="" data-toggle="modal" data-target="#atualizarStatus"
 						class="btn btn-light"> <img alt="" width="145px"
-						src="<%=request.getContextPath()%>/resources/imagens/semFuncao.png">
+						src="<%=request.getContextPath()%>/resources/imagens/atualizarStatus5.png">
 					</a>
-					<a title="Sem Função" href="<%=request.getContextPath()%>/index"
+					<a title="Criar lembrete" href="" data-toggle="modal" data-target="#addLembrete"
 						class="btn btn-light"> <img alt="" width="145px"
 						src="<%=request.getContextPath()%>/resources/imagens/semFuncao.png">
 					</a>
@@ -196,6 +197,8 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal Adicionar Progresso -->
 
 	<div class="modal fade " id="adicionarProgressoModal" tabindex="-1"
 		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -304,6 +307,48 @@
 						<input type="date" name="prazoSolucao"  class="form-control" id="PrazoSolucao" required>
 							<div class="invalid-feedback">Informe um Novo Prazo.</div>
 						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal" onclick="atualizarPagina();">Fechar</button>
+							<button type="submit" class="btn btn-success">Atualizar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal Atualizar Status -->
+	
+	<div class="modal fade " id="atualizarStatus" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Atualizar Status</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close" onclick="atualizarPagina();">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form class="needs-validation" novalidate
+						action="<%=request.getContextPath()%>/atualizarStatus"
+						method="post">
+						<div class="col-md-7 mb-3">
+							<label id="lblIdAtualizarStatus" for="inputIdAtualizarStatus">Chamado:
+							</label>
+							<input type="text" hidden="true" name="id"
+							class="form-control" id="inputIdAtualizarStatus">
+						</div>
+						<div class="col-md-7 mb-3">
+						<label for="Status">Selecione um novo Status</label>
+						<select	class="form-control" id="Status" name="status">
+							<option value="ABERTO">ABERTO</option>
+							<option value="EM ANDAMENTO">EM ANDAMENTO</option>
+							<option value="FINALIZADO">FINALIZADO</option>
+						</select>
+					</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal" onclick="atualizarPagina();">Fechar</button>

@@ -229,6 +229,31 @@ public class ChamadosController {
 		
 	}
 	
+	
+	@RequestMapping("atualizarStatus")
+	public String atualizarStatus(Chamados chamadoNovoStatus){
+		
+		try {
+			Chamados chamadoStatusAnterior = new Chamados();
+			chamadoStatusAnterior = chamadosService.consultarChamadoPorId(chamadoNovoStatus.getId());
+			
+			historicoChamadoService.registrarNovoStatus(chamadoStatusAnterior, chamadoNovoStatus);
+			
+			chamadoStatusAnterior.setStatus(chamadoNovoStatus.getStatus());
+			chamadoNovoStatus = chamadoStatusAnterior;
+			chamadosService.editar(chamadoNovoStatus);
+			if(HomeController.checkAbaIndex){
+				return "redirect:index";
+			}else{
+				return "redirect:indexTI";
+			}
+		} catch (SQLException e) {
+			msg.setMensagemErro("Erro ao atualizar Status: " + e.getMessage());
+			return "redirect:mostraMensagemChamado";
+		}
+		
+	}
+	
 	@RequestMapping("mostraMensagemChamado")
 	public ModelAndView execMensagens(){
 		String paginaMensagem = "";

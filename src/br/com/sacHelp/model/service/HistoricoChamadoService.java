@@ -55,6 +55,22 @@ public class HistoricoChamadoService {
 		adicionar(historicoChamado);
 	}
 	
+	public void registrarNovoStatus(Chamados chamadoAnterior, Chamados chamado) throws SQLException {
+		SimpleDateFormat sDFormat = new SimpleDateFormat("HH:mm:ss");
+		
+		HistoricoChamado historicoChamado = new HistoricoChamado();
+		historicoChamado.setChamado(chamado);
+		historicoChamado.setOcorrencia("Atualização do Status. ");
+		historicoChamado.getData().setTime(new Date());
+		historicoChamado.setHora(sDFormat.format(new Date()));
+		
+		historicoChamado.setOcorrencia(historicoChamado.getOcorrencia()+
+				"De: "+chamadoAnterior.getStatus()+
+				" para Novo Status: "+chamado.getStatus());
+		
+		adicionar(historicoChamado);
+	}
+	
 	public void registrarAlteracao(Chamados chamadoAnterior, Chamados chamado) throws SQLException {
 		SimpleDateFormat sDFormat = new SimpleDateFormat("HH:mm:ss");
 		DateFormat formatarData = DateFormat.getDateInstance();
