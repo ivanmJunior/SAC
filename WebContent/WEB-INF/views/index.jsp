@@ -145,7 +145,7 @@
 					</a>
 					<a title="Criar lembrete" href="" data-toggle="modal" data-target="#addLembrete"
 						class="btn btn-light"> <img alt="" width="145px"
-						src="<%=request.getContextPath()%>/resources/imagens/semFuncao.png">
+						src="<%=request.getContextPath()%>/resources/imagens/lembrete3.png">
 					</a>
 					<a title="Sem Função" href="<%=request.getContextPath()%>/index"
 						class="btn btn-light"> <img alt="" width="145px"
@@ -383,7 +383,7 @@
 							<label for="descricaoLembrete">Descrição</label>
 							<textarea name="solucao" class="form-control"
 								id="descricaoLembrete" placeholder="O que deseja lembrar?"
-								rows="2" required></textarea>
+								rows="4" required></textarea>
 							<div class="invalid-feedback">A descrição é obrigatória.</div>
 						</div>
 						</div>
@@ -398,6 +398,24 @@
 						<input type="time" name="data"  class="form-control" id="data" required>
 							<div class="invalid-feedback">Informe a hora.</div>
 						</div>
+						</div>
+						<div class=row>
+							<div class="col-md-12 mb-3">
+								<label class="checkbox-inline">
+									<input type="checkbox" id="checkRepetir">    Repetir
+								</label>
+							</div>
+						</div>
+						<div class=row>
+							<div class="col-md-12 mb-3" >
+								<select  disabled class="form-control" id="cbBoxRepetir">
+									<option value="">Selecione aqui</option>
+									<option value="dd">Diário</option>
+									<option value="mm">Por Mês</option>
+									<option value="yy">Por Semana</option>
+									<option value="data">Na Data</option>
+								</select>
+							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"

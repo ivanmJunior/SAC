@@ -31,6 +31,20 @@ $(document).ready(function() {
     });
   }, false);
 })();
+$("#checkRepetir").on('click', function(){
+	 
+	 var combo = document.querySelector('#cbBoxRepetir');
+	 if(this.checked)
+	  {
+		$(combo).prop("disabled", false);
+	  
+	  }else if(!this.checked){
+		  $(combo).prop("disabled", true);
+		  combo.selectedIndex = 0;
+	  }
+	
+		
+});
 
 $("a").on('click', function(){
 	if(document.querySelector('#inputId').value == "" && (this.id == "linkAddProgresso" ||
