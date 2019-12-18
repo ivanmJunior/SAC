@@ -1,0 +1,56 @@
+html, body {
+			
+		}
+
+		main {
+			text-align: left;
+			font-size: 8em;
+		}
+
+		.liga-desliga__checkbox {
+			position: absolute;
+			left: -9999px;
+		}
+
+		.liga-desliga__botao {
+			display: inline-block;
+			vertical-align: middle;
+			position: relative;
+			cursor: pointer;
+		}
+
+		.liga-desliga__botao::before,
+		.liga-desliga__botao::after {
+			content: "";
+			box-shadow: 0 0 0 1px #CCC;
+			transition: all 0.2s ease;
+		}
+
+		.liga-desliga__botao::before {
+			display: inline-block;
+			border-radius: 1em;
+			height: 0.25em;
+			width: 0.5em;
+			margin-right: 0.5em;
+			background: #D3D3D3;
+		}
+
+		.liga-desliga__botao::after {
+			position: absolute;
+			top: 0.025em;
+			left: 0.025em;
+			width: 0.20em;
+			height: 0.20em;
+			border-radius: 100%;
+			background: #FFF;
+		}
+
+		.liga-desliga__checkbox:checked + .liga-desliga__botao::before {
+			background: #55D069;
+		}
+
+		.liga-desliga__checkbox:checked + .liga-desliga__botao::after {
+			left: 0.28em;
+		}
+
+		

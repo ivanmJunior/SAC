@@ -1,3 +1,47 @@
+var TelaLembretes = {
+	
+	checkRepetir: document.querySelector('#checkRepetir'),	
+	combo: document.querySelector('#cbBoxRepetir'),
+	checkSeg: document.querySelector('#checkSeg'),
+	checkTer: document.querySelector('#checkTer'),
+	checkQua: document.querySelector('#checkQua'),
+	checkQui: document.querySelector('#checkQui'),
+	checkSex: document.querySelector('#checkSex'),
+	checkSab: document.querySelector('#checkSab'),
+	
+	getCheckRepetir: function(){
+		return this.checkRepetir;
+	},
+	
+	getCombo: function(){
+		return this.combo;
+	},
+
+	getCheckSeg: function(){
+		return this.checkSeg;
+	},
+	
+	getCheckTer: function(){
+		return this.checkTer;
+	},
+	
+	getCheckQua: function(){
+		return this.checkQua;
+	},
+	
+	getCheckQui: function(){
+		return this.checkQui;
+	},
+	
+	getCheckSex: function(){
+		return this.checkSex;
+	},
+	
+	getCheckSab: function(){
+		return this.checkSab;
+	}
+}
+
 $(document).ready(function() {
 	
 	if(document.querySelector('#checkAbas').checked){
@@ -31,16 +75,56 @@ $(document).ready(function() {
     });
   }, false);
 })();
+
+$("input").on('click', function(){
+	
+	if(TelaLembretes.getCheckRepetir().checked){
+		if((this.checked) && (this.id == TelaLembretes.getCheckSeg().id || this.id == TelaLembretes.getCheckTer().id ||
+				this.id == TelaLembretes.getCheckQua().id || this.id == TelaLembretes.getCheckQui().id ||
+				this.id == TelaLembretes.getCheckSex().id || this.id == TelaLembretes.getCheckSab().id)){
+			
+			TelaLembretes.getCombo().selectedIndex = 0;
+			$(TelaLembretes.getCombo()).prop("disabled", true);
+		
+		}else if(!TelaLembretes.getCheckSeg().checked && !TelaLembretes.getCheckTer().checked &&
+				!TelaLembretes.getCheckQua().checked && !TelaLembretes.getCheckQui().checked &&
+				!TelaLembretes.getCheckSex().checked && !TelaLembretes.getCheckSab().checked){
+			
+			$(TelaLembretes.getCombo()).prop("disabled", false);
+		}
+	}
+})
+
 $("#checkRepetir").on('click', function(){
-	 
-	 var combo = document.querySelector('#cbBoxRepetir');
-	 if(this.checked)
+
+	if(this.checked)
 	  {
-		$(combo).prop("disabled", false);
+		$(TelaLembretes.getCombo()).prop("disabled", false);
+		$(TelaLembretes.getCheckSeg()).prop("disabled", false);
+		$(TelaLembretes.getCheckTer()).prop("disabled", false);
+		$(TelaLembretes.getCheckQua()).prop("disabled", false);
+		$(TelaLembretes.getCheckQui()).prop("disabled", false);
+		$(TelaLembretes.getCheckSex()).prop("disabled", false);
+		$(TelaLembretes.getCheckSab()).prop("disabled", false);
 	  
 	  }else if(!this.checked){
-		  $(combo).prop("disabled", true);
-		  combo.selectedIndex = 0;
+	  	TelaLembretes.getCombo().selectedIndex = 0;
+	  	$(TelaLembretes.getCombo()).prop("disabled", true);
+	  	$(TelaLembretes.getCheckSeg()).prop("disabled", true);
+		$(TelaLembretes.getCheckTer()).prop("disabled", true);
+		$(TelaLembretes.getCheckQua()).prop("disabled", true);
+		$(TelaLembretes.getCheckQui()).prop("disabled", true);
+		$(TelaLembretes.getCheckSex()).prop("disabled", true);
+		$(TelaLembretes.getCheckSab()).prop("disabled", true);
+		
+		$(TelaLembretes.getCheckSeg()).prop("checked", false);
+		$(TelaLembretes.getCheckTer()).prop("checked", false);
+		$(TelaLembretes.getCheckQua()).prop("checked", false);
+		$(TelaLembretes.getCheckQui()).prop("checked", false);
+		$(TelaLembretes.getCheckSex()).prop("checked", false);
+		$(TelaLembretes.getCheckSab()).prop("checked", false);
+			
+		  
 	  }
 	
 		

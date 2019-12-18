@@ -25,6 +25,9 @@
 	href="<%=request.getContextPath()%>/resources/css/bootstrap-datetimepicker.min.css"
 	rel="stylesheet">
 	<link
+	href="<%=request.getContextPath()%>/resources/css/botai_iOS.css"
+	rel="stylesheet">
+	<link
 	href="<%=request.getContextPath()%>/resources/css/sticky-footer-navbar.css"
 	rel="stylesheet">
 <title>SAC - Home</title>
@@ -163,7 +166,7 @@
 							<tr>
 								<th scope="col">Id</th>
 								<th scope="col">Título</th>
-								<th scope="col">dia(s) Atrasado</th>
+								<th scope="col">Dia(s)p/ Prazo</th>
 								<th scope="col">Loja</th>
 								<th scope="col">Status</th>
 								<th scope="col">Prazo</th>
@@ -175,7 +178,7 @@
 								<tr id="linhaTbPendentes${chamado.id}">
 									<td>${chamado.id}</td>
 									<td>${chamado.titulo}</td>
-									<td>${chamado.diferencaTempoDeEntrega}</td>
+									<td align="center">${chamado.diferencaTempoDeEntrega}</td>
 									<td>${chamado.loja}</td>
 									<td>${chamado.status}</td>
 									<td><fmt:formatDate type="date"
@@ -394,27 +397,87 @@
 							<div class="invalid-feedback">Informe uma data.</div>
 						</div>
 						<div class="col-md-6 mb-3">
-							<label for="data">Hora</label>
-						<input type="time" name="data"  class="form-control" id="data" required>
+							<label for="hora">Hora</label>
+						<input type="time" name="data"  class="form-control" id="hora" required>
 							<div class="invalid-feedback">Informe a hora.</div>
 						</div>
 						</div>
 						<div class=row>
-							<div class="col-md-12 mb-3">
-								<label class="checkbox-inline">
-									<input type="checkbox" id="checkRepetir">    Repetir
-								</label>
+							<div class="col-md-2 mb-3">
+								<label>Repetir</label>
+								<main>
+									<div class="liga-desliga">
+										<input type="checkbox" class="liga-desliga__checkbox" id="checkRepetir">
+										<label for="checkRepetir" class="liga-desliga__botao"></label>
+									</div>
+								</main>
 							</div>
 						</div>
 						<div class=row>
 							<div class="col-md-12 mb-3" >
-								<select  disabled class="form-control" id="cbBoxRepetir">
+								<select disabled class="form-control" id="cbBoxRepetir">
 									<option value="">Selecione aqui</option>
 									<option value="dd">Diário</option>
 									<option value="mm">Por Mês</option>
 									<option value="yy">Por Semana</option>
 									<option value="data">Na Data</option>
 								</select>
+							</div>
+						</div>
+						<div class=row>
+						<div align="center" class="col-md-2 mb-3">
+								<label>Seg</label>
+								<main>
+									<div align="center" class="liga-desliga">
+										<input disabled type="checkbox" class="liga-desliga__checkbox" id="checkSeg">
+										<label for="checkSeg" class="liga-desliga__botao"></label>
+									</div>
+								</main>
+							</div>
+							<div align="center" class="col-md-2 mb-3">
+								<label>Ter</label>
+								<main>
+									<div class="liga-desliga">
+										<input disabled type="checkbox" class="liga-desliga__checkbox" id="checkTer">
+										<label for="checkTer" class="liga-desliga__botao"></label>
+									</div>
+								</main>
+							</div>
+							<div align="center" class="col-md-2 mb-3">
+								<label>Qua</label>
+								<main>
+									<div class="liga-desliga">
+										<input disabled type="checkbox" class="liga-desliga__checkbox" id="checkQua">
+										<label for="checkQua" class="liga-desliga__botao"></label>
+									</div>
+								</main>
+							</div>
+							<div align="center" class="col-md-2 mb-3">
+								<label>Qui</label>
+								<main>
+									<div class="liga-desliga">
+										<input disabled type="checkbox" class="liga-desliga__checkbox" id="checkQui">
+										<label for="checkQui" class="liga-desliga__botao"></label>
+									</div>
+								</main>
+							</div>
+							<div align="center" class="col-md-2 mb-3">
+								<label>Sex</label>
+								<main>
+									<div class="liga-desliga">
+										<input disabled type="checkbox" class="liga-desliga__checkbox" id="checkSex">
+										<label for="checkSex" class="liga-desliga__botao"></label>
+									</div>
+								</main>
+							</div>
+							<div align="center" class="col-md-2 mb-3">
+								<label>Sab</label>
+								<main>
+									<div class="liga-desliga">
+										<input disabled type="checkbox" class="liga-desliga__checkbox" id="checkSab">
+										<label for="checkSab" class="liga-desliga__botao"></label>
+									</div>
+								</main>
 							</div>
 						</div>
 						<div class="modal-footer">

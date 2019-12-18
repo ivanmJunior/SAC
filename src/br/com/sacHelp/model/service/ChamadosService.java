@@ -148,9 +148,9 @@ public class ChamadosService {
 			
 			dias = calcularAtraso(chamadoDaConsulta);
 			if(dias > 0){
-				chamadoDaConsulta.setDiferencaTempoDeEntrega(dias+" Atra");
+				chamadoDaConsulta.setDiferencaTempoDeEntrega(String.valueOf(dias));
 			}else{
-				chamadoDaConsulta.setDiferencaTempoDeEntrega(dias+" Rest");
+				chamadoDaConsulta.setDiferencaTempoDeEntrega(String.valueOf(dias));
 			}
 		}
 		return contaPendentes;
@@ -164,9 +164,9 @@ public class ChamadosService {
 			
 			dias = calcularAtraso(chamadoDaLista);
 			if(dias > 0){
-				chamadoDaLista.setDiferencaTempoDeEntrega(dias+" Atra");
+				chamadoDaLista.setDiferencaTempoDeEntrega(String.valueOf(dias));
 			}else{
-				chamadoDaLista.setDiferencaTempoDeEntrega(dias+" Rest");
+				chamadoDaLista.setDiferencaTempoDeEntrega(String.valueOf(dias));
 			}
 			
 			novaLista.add(chamadoDaLista);
@@ -178,11 +178,18 @@ public class ChamadosService {
 	
 	//CALCULA A QUANTIDADE DE DIAS EM ATRASO DO CHAMADO
 	public int calcularAtraso(Chamados chamado){
-		Calendar dataAtual = Calendar.getInstance();
-		dataAtual.setTime(new Date());
-		int dias = dataAtual.get(Calendar.DAY_OF_YEAR) - chamado.getPrazoSolucao().get(Calendar.DAY_OF_YEAR);
 		
-		return dias;
+		Date dData;
+		dData = chamado.getPrazoSolucao().getTime();
+		Calendar dataAtual = Calendar.getInstance();
+		Calendar dataValidade = Calendar.getInstance();
+		dataValidade.setTime(dData);
+		dataAtual.setTime(new Date());
+		int ano1 = dataAtual.get(Calendar.YEAR);
+		int ano2 = dataValidade.get(Calendar.YEAR);
+		int dias = dataValidade.get(Calendar.DAY_OF_YEAR) - dataAtual.get(Calendar.DAY_OF_YEAR);
+		return (ano2 - ano1)*365 + (dias);
+		
 	}
 	
 	//FILTRA DE UMA LISTA DE CHAMADOS APENAS OS ATRASADOS
@@ -192,7 +199,7 @@ public class ChamadosService {
 		for(Chamados chamadoDaLista : listaChamadosPendentes){
 			dias = calcularAtraso(chamadoDaLista);
 			if(dias > 0){
-				chamadoDaLista.setDiferencaTempoDeEntrega(dias+" Atra");
+				chamadoDaLista.setDiferencaTempoDeEntrega(String.valueOf(dias));
 				novaLista.add(chamadoDaLista);
 			}
 		}
