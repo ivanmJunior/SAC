@@ -1,5 +1,6 @@
 package br.com.sacHelp.util;
 
+
 public class ContaPendentes {
 	
 	private int qtdAbertos;

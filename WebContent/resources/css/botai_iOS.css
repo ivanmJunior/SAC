@@ -18,29 +18,29 @@ html, body {
 			position: relative;
 			cursor: pointer;
 		}
-
+	/*Configuração da transição*/
 		.liga-desliga__botao::before,
 		.liga-desliga__botao::after {
 			content: "";
 			box-shadow: 0 0 0 1px #CCC;
 			transition: all 0.2s ease;
 		}
-
+    /*Configuração do Fundo*/
 		.liga-desliga__botao::before {
 			display: inline-block;
 			border-radius: 1em;
-			height: 0.25em;
-			width: 0.5em;
-			margin-right: 0.5em;
+			height: 0.15em;
+			width: 0.3em;
+			margin-right: 0.3em;
 			background: #D3D3D3;
 		}
-
+	/*Configuração do Circulo*/
 		.liga-desliga__botao::after {
 			position: absolute;
-			top: 0.025em;
-			left: 0.025em;
-			width: 0.20em;
-			height: 0.20em;
+			top: 0.015em;
+			left: 0.015em;
+			width: 0.12em;
+			height: 0.12em;
 			border-radius: 100%;
 			background: #FFF;
 		}
@@ -48,9 +48,9 @@ html, body {
 		.liga-desliga__checkbox:checked + .liga-desliga__botao::before {
 			background: #55D069;
 		}
-
+	/*Configuração do Deslocamento*/
 		.liga-desliga__checkbox:checked + .liga-desliga__botao::after {
-			left: 0.28em;
+			left: 0.17em;
 		}
 
 		

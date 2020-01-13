@@ -26,12 +26,14 @@ Quem, quando, que horas, o que? OK.
 
 --Criar rotinas de Eliminar chamado.
 
---Criar rotinas de Eliminar Historico.
---Criar registro de Alterações de Histórico.
+--Criar rotinas de Eliminar Historico.OK
+--Criar registro de Alterações de Histórico.OK
 
---Criar rotinas de atualizar prazo.
+--Criar rotinas de atualizar prazo.OK
 
 --Criar rotinas de registro de Lembretes/tarefas fixas.
 --Criar Alertas de Lmbretes.
 
 --Criar Listar por Período data de Abertura e data Fechamento.
+
+--Criar funcão javascript para carregar tela de editar lembre.

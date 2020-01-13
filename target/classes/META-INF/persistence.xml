@@ -8,7 +8,7 @@
     <persistence-unit name="sachelpbd">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         
-         <class>br.com.sacHelp.model.entity.Chamados</class>
+         <class>br.com.sacHelp.model.entity.Chamado</class>
          <class>br.com.sacHelp.model.entity.HistoricoChamado</class>
         
         <properties>

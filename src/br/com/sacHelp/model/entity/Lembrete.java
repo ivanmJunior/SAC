@@ -3,22 +3,26 @@ package br.com.sacHelp.model.entity;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+/**Classe Lembrete é a classe entidade que serve para instânciar lembretes.
+ * Possui os atributos do lembrete com seus respectivos métodos de acesso Getters e Setters.
+ * Possui as anotações (Annotations) que fazem todo o mapeamento para o Bonco de Dados.*/
 @Entity
 @Table(name="lembretes")
 public class Lembrete {
 
 	@Id
 	@GeneratedValue
+	@Column(name = "idlembretes")
 	private int id;
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -30,21 +34,24 @@ public class Lembrete {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Calendar data;
+	
 	private String hora;
 	private String assunto;
 	private boolean ativo;
+	private boolean repetir;
+	private char tipoRepetir;
+	private boolean repetirAPartirData;
 	private int dia;
+	private int diaEmHoras;
 	private int mes;
 	private int ano;
-	private String seg;
-	private String ter;
-	private String qua;
-	private String qui;
-	private String sex;
-	private String sab;
-	
-	@Transient
-	private String dom;
+	private boolean seg;
+	private boolean ter;
+	private boolean qua;
+	private boolean qui;
+	private boolean sex;
+	private boolean sab;
+	private boolean dom;
 	
 	public Lembrete(){
 		this.dataRegistro = new GregorianCalendar();
@@ -98,59 +105,115 @@ public class Lembrete {
 	public void setDia(int dia) {
 		this.dia = dia;
 	}
+	public int getDiaEmHoras() {
+		return diaEmHoras;
+	}
+
+	public void setDiaEmHoras(int diaEmHoras) {
+		this.diaEmHoras = diaEmHoras;
+	}
+
 	public int getMes() {
 		return mes;
 	}
 	public void setMes(int mes) {
 		this.mes = mes;
 	}
+	public boolean isRepetir() {
+		return repetir;
+	}
+
+	public void setRepetir(boolean repetir) {
+		this.repetir = repetir;
+	}
+
 	public int getAno() {
 		return ano;
 	}
 	public void setAno(int ano) {
 		this.ano = ano;
 	}
-	public String getSeg() {
+	
+
+	public boolean isSeg() {
 		return seg;
 	}
-	public void setSeg(String seg) {
+
+	public void setSeg(boolean seg) {
 		this.seg = seg;
 	}
-	public String getTer() {
+
+	public boolean isTer() {
 		return ter;
 	}
-	public void setTer(String ter) {
+
+	public void setTer(boolean ter) {
 		this.ter = ter;
 	}
-	public String getQua() {
+
+	public boolean isQua() {
 		return qua;
 	}
-	public void setQua(String qua) {
+
+	public void setQua(boolean qua) {
 		this.qua = qua;
 	}
-	public String getQui() {
+
+	public boolean isQui() {
 		return qui;
 	}
-	public void setQui(String qui) {
+
+	public void setQui(boolean qui) {
 		this.qui = qui;
 	}
-	public String getSex() {
+
+	public boolean isSex() {
 		return sex;
 	}
-	public void setSex(String sex) {
+
+	public void setSex(boolean sex) {
 		this.sex = sex;
 	}
-	public String getSab() {
+
+	public boolean isSab() {
 		return sab;
 	}
-	public void setSab(String sab) {
+
+	public void setSab(boolean sab) {
 		this.sab = sab;
 	}
-	public String getDom() {
+
+	public boolean isDom() {
 		return dom;
 	}
-	public void setDom(String dom) {
+
+	public void setDom(boolean dom) {
 		this.dom = dom;
 	}
-	
+
+	public char getTipoRepetir() {
+		return tipoRepetir;
+	}
+
+	public void setTipoRepetir(char tipoRepetir) {
+		this.tipoRepetir = tipoRepetir;
+	}
+
+	public boolean isRepetirAPartirData() {
+		return repetirAPartirData;
+	}
+
+	public void setRepetirAPartirData(boolean repetirAPartirData) {
+		this.repetirAPartirData = repetirAPartirData;
+	}
+
+	@Override
+	public String toString() {
+		return "Lembrete [id=" + id + ", dataRegistro=" + dataRegistro + ", horaRegistro=" + horaRegistro + ", data="
+				+ data + ", hora=" + hora + ", assunto=" + assunto + ", ativo=" + ativo + ", repetir=" + repetir
+				+ ", tipoRepetir=" + tipoRepetir + ", repetirAPartirData=" + repetirAPartirData + ", dia=" + dia
+				+ ", diaEmHoras=" + diaEmHoras + ", mes=" + mes + ", ano=" + ano + ", seg=" + seg + ", ter=" + ter
+				+ ", qua=" + qua + ", qui=" + qui + ", sex=" + sex + ", sab=" + sab + ", dom=" + dom + "]";
+	}
+
 }

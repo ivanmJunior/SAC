@@ -9,8 +9,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.sacHelp.model.entity.Chamados;
+import br.com.sacHelp.model.entity.Chamado;
 import br.com.sacHelp.model.entity.HistoricoChamado;
+import br.com.sacHelp.model.exception.CampoVazioException;
 import br.com.sacHelp.model.percistence.interfaces.IRepositorioHistoricoChamado;
 
 @Service
@@ -19,8 +20,13 @@ public class HistoricoChamadoService {
 	@Autowired
 	IRepositorioHistoricoChamado repHistoricoChamadoDAO;
 	
-	public void adicionar(HistoricoChamado historicoChamado) throws SQLException{
-		repHistoricoChamadoDAO.adicionar(historicoChamado);
+	public void adicionar(HistoricoChamado historicoChamado) throws SQLException, CampoVazioException{
+		if(historicoChamado.getOcorrencia().equals("")) {
+			throw new CampoVazioException("Campo ocorrencia do histórico não pode ser vazio.");
+		}else {
+			repHistoricoChamadoDAO.adicionar(historicoChamado);
+		}
+		
 	}
 	
 	public List<HistoricoChamado> consultar() throws SQLException{
@@ -39,7 +45,7 @@ public class HistoricoChamadoService {
 		repHistoricoChamadoDAO.editar(historicoChamado);
 	}
 
-	public void registrarNovoPrazo(Chamados chamadoAnterior, Chamados chamado) throws SQLException {
+	public void registrarNovoPrazo(Chamado chamadoAnterior, Chamado chamado) throws SQLException, CampoVazioException {
 		SimpleDateFormat sDFormat = new SimpleDateFormat("HH:mm:ss");
 		DateFormat formatarData = DateFormat.getDateInstance();
 		HistoricoChamado historicoChamado = new HistoricoChamado();
@@ -55,7 +61,7 @@ public class HistoricoChamadoService {
 		adicionar(historicoChamado);
 	}
 	
-	public void registrarNovoStatus(Chamados chamadoAnterior, Chamados chamado) throws SQLException {
+	public void registrarNovoStatus(Chamado chamadoAnterior, Chamado chamado) throws SQLException, CampoVazioException {
 		SimpleDateFormat sDFormat = new SimpleDateFormat("HH:mm:ss");
 		
 		HistoricoChamado historicoChamado = new HistoricoChamado();
@@ -71,7 +77,11 @@ public class HistoricoChamadoService {
 		adicionar(historicoChamado);
 	}
 	
-	public void registrarAlteracao(Chamados chamadoAnterior, Chamados chamado) throws SQLException {
+	/**Este método serve para registrar no historico do chamado qual modificação foi realizada.
+	 * Ele recebe como parâmetros o Chamado anterior e o novo chamado, então verifica o que foi
+	 * alterado e adiciona no histórico do chamado.
+	 * @throws CampoVazioException, SQLException */
+	public void registrarAlteracao(Chamado chamadoAnterior, Chamado chamado) throws SQLException, CampoVazioException, SQLException {
 		SimpleDateFormat sDFormat = new SimpleDateFormat("HH:mm:ss");
 		DateFormat formatarData = DateFormat.getDateInstance();
 		HistoricoChamado historicoChamado = new HistoricoChamado();

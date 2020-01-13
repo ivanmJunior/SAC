@@ -11,25 +11,38 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.sacHelp.model.entity.Chamados;
+import br.com.sacHelp.model.entity.Chamado;
 import br.com.sacHelp.model.exception.CampoVazioException;
 import br.com.sacHelp.model.exception.PrazoInvadoException;
-import br.com.sacHelp.model.percistence.interfaces.IRepositorioChamados;
+import br.com.sacHelp.model.percistence.interfaces.IRepositorioChamado;
 import br.com.sacHelp.util.ContaPendentes;
 
+/**ChamadoService é uma classe responsável por validações e tratamentos
+ * de regras do chamado.*/
 @Service
 public class ChamadosService {
 
-	private static String ordem = "asc";
-	private static String colunaAnteridor = "";
-	private List<Chamados> listaDaConsulta;
+	/**ORDEM é um atributo usado especificamente no método classificarAscDesc().
+	 * Este é passado como parâmetro no métoodo consultarOrdenado(coluna, ORDEM).*/
+	private static String ORDEM = "asc";
+	
+	/**COLUNA é um atributo usado especificamente no método classificarAscDesc().
+	 * Este é passado como parâmetro no métoodo consultarOrdenado(coluna, ORDEM) 
+	 * e armazena a descrição da coluna anterior da ultima classificação.*/
+	private static String COLUNA_ANTERIOR = "";
+	
+	/**Este atributo é usado em quase todos os métodos apenas nessa classe. 
+	 * Serve para armazenar temporariamnete uma lista consutada no atrvés do repositório*/
+	private List<Chamado> listaDaConsulta;
 	
 	@Autowired
-	IRepositorioChamados repChamadosDAO;
+	IRepositorioChamado repChamadosDAO;
 	
+	/**O objeto sDFormat é usado sempre que se faz necessário formatar uma data.*/
 	SimpleDateFormat sDFormat = new SimpleDateFormat("dd/MM/yyyy");
 	
-	public void adicionar(Chamados chamado) throws PrazoInvadoException, CampoVazioException, SQLException{
+	/**Faz a validação do chamado e chama o repositório do chamado para realizar a persistência*/
+	public void adicionar(Chamado chamado) throws PrazoInvadoException, CampoVazioException, SQLException{
 		if(chamado.getDescricao().equals("")||
 				chamado.getLoja().equals("")||
 				chamado.getContato().equals("")){
@@ -44,90 +57,107 @@ public class ChamadosService {
 		}
 	}
 	
-	public List<Chamados> consultar() throws SQLException{
+	public List<Chamado> consultar() throws SQLException{
 		return repChamadosDAO.consultar();
 	}
 
-	public Chamados consultarChamadoPorId(int id) throws SQLException {
+	public Chamado consultarChamadoPorId(int id) throws SQLException {
 		return repChamadosDAO.consultarChamadoProId(id);
 	}
 	
-	//CLASSIFICA EM CRESCENTE O DECRESCENTE A PARTIR DE UMA COLUNA DA TELA LISTAR CHAMADOS
-	public List<Chamados> classificarAscDesc(String coluna) throws SQLException {
+	public Chamado consultarLinhaTempoChamado(int id) throws SQLException{
+		Chamado chamadoDaConsulta = consultarChamadoPorId(id);
+		if(chamadoDaConsulta.getHistoricosChamado().isEmpty()) {
+			return null;
+		}else {
+			return chamadoDaConsulta;
+		}
 		
-		if(ordem.equals("asc") && colunaAnteridor.equals(coluna)){
-			ordem = "desc";
-			listaDaConsulta = repChamadosDAO.consultarOrdenado(coluna, ordem);
+	}
+	
+	/**O método classificarAscDesc(String coluna), serve para ordenar uma lista de chamados 
+	 * em crescente ou decrescente a partir de uma atributo (coluna) do chamado e retorna 
+	 * a lista classificada*/
+	public List<Chamado> classificarAscDesc(String coluna) throws SQLException {
+		
+		if(ORDEM.equals("asc") && COLUNA_ANTERIOR.equals(coluna)){
+			ORDEM = "desc";
+			listaDaConsulta = repChamadosDAO.consultarOrdenado(coluna, ORDEM);
 		}else{
-			ordem = "asc";
-			colunaAnteridor = coluna;
-			listaDaConsulta = repChamadosDAO.consultarOrdenado(coluna, ordem);
+			ORDEM = "asc";
+			COLUNA_ANTERIOR = coluna;
+			listaDaConsulta = repChamadosDAO.consultarOrdenado(coluna, ORDEM);
 		}
 		
 		return listaDaConsulta;
 		
 	}
 	
-	public List<Chamados> consultarPorDescricaoOuTitulo(Chamados chamado) throws SQLException{
+	public List<Chamado> consultarPorDescricaoOuTitulo(Chamado chamado) throws SQLException{
 		return repChamadosDAO.consultarPorDescricaoOuTitulo(chamado);
 	}
 	
-	public List<Chamados> consultarPorPrazoSolucaoHoje(Chamados chamado) throws SQLException {
-		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarPorPrazoSolucaoHojeERP(chamado));
+	public List<Chamado> consultarPorPrazoSolucaoHoje(Chamado chamado) throws SQLException {
+		return adicionarDiasParaPrazoNoChamado(repChamadosDAO.consultarPorPrazoSolucaoHojeERP(chamado));
 	}
 	
-	public List<Chamados> consultarAbertosOuEmAndamento() throws SQLException{
+	public List<Chamado> consultarAbertosOuEmAndamento() throws SQLException{
 		return repChamadosDAO.consultarAbertosOuEmAndamentoERP();
 	}
 	
-	public List<Chamados> consultarAbertos() throws SQLException{
-		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarAbertosERP());
+	public List<Chamado> consultarAbertos() throws SQLException{
+		return adicionarDiasParaPrazoNoChamado(repChamadosDAO.consultarAbertosERP());
 	}
 	
-	public List<Chamados> consultarEmAndamento() throws SQLException{
-		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarEmAndamentoERP());
+	public List<Chamado> consultarEmAndamento() throws SQLException{
+		return adicionarDiasParaPrazoNoChamado(repChamadosDAO.consultarEmAndamentoERP());
 	}
 	
-	//CONSULTA CHAMADOS PENDENTES E FILTRA OS ATRAZADOS
-	public List<Chamados> consultarAtrasados() throws SQLException{
+	/**CONSULTA CHAMADOS PENDENTES E FILTRA OS ATRAZADOS*/
+	public List<Chamado> consultarAtrasados() throws SQLException{
 		return filtrarAtrasados(repChamadosDAO.consultarAbertosOuEmAndamentoERP());
 	}
 	
-	//----------------------------------------------------
+	//----------------------------------------------------//
 	
-	public List<Chamados> consultarPorPrazoSolucaoHojeTI(Chamados chamado) throws SQLException {
-		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarPorPrazoSolucaoHojeTI(chamado));
+	public List<Chamado> consultarPorPrazoSolucaoHojeTI(Chamado chamado) throws SQLException {
+		return adicionarDiasParaPrazoNoChamado(repChamadosDAO.consultarPorPrazoSolucaoHojeTI(chamado));
 	}
 	
-	public List<Chamados> consultarAbertosOuEmAndamentoTI() throws SQLException{
+	public List<Chamado> consultarAbertosOuEmAndamentoTI() throws SQLException{
 		return repChamadosDAO.consultarAbertosOuEmAndamentoTI();
 	}
 	
-	public List<Chamados> consultarAbertosTI() throws SQLException{
-		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarAbertosTI());
+	public List<Chamado> consultarAbertosTI() throws SQLException{
+		return adicionarDiasParaPrazoNoChamado(repChamadosDAO.consultarAbertosTI());
 	}
 	
-	public List<Chamados> consultarEmAndamentoTI() throws SQLException{
-		return adicionarCalcAtrasoNaLista(repChamadosDAO.consultarEmAndamentoTI());
+	public List<Chamado> consultarEmAndamentoTI() throws SQLException{
+		return adicionarDiasParaPrazoNoChamado(repChamadosDAO.consultarEmAndamentoTI());
 	}
 	
-	public List<Chamados> consultarAtrasadosTI() throws SQLException{
+	public List<Chamado> consultarAtrasadosTI() throws SQLException{
 		return filtrarAtrasados(repChamadosDAO.consultarAbertosOuEmAndamentoTI());
 	}
 	
-	//----------------------------------------------------
+	//----------------------------------------------------//
 	
-	public void editar(Chamados chamado) throws SQLException{
+	public void editar(Chamado chamado) throws SQLException{
 		repChamadosDAO.editar(chamado);
 	}
 	
-	//CONTA CHAMADOS PENDENTES SEPARANDO ABERTOS, EM ANDAMENTO E ATRASADOS
-	public ContaPendentes contarChamadosPendentes(List<Chamados> listaChamadosPendentes){
+	/**Esse método serve para contar chamados a quantidade de chamados:
+	 * Pendentes,
+	 * Em Andamento,
+	 * Abertos,
+	 * Para o Dia
+	 * e retorna um objeto ContaPendentes.*/
+	public ContaPendentes contarChamadosPendentes(List<Chamado> listaChamadosPendentes){
 		ContaPendentes contaPendentes = new ContaPendentes();
 		Calendar dataAtual = new GregorianCalendar();
 		int dias = 0;
 		
-		for(Chamados chamadoDaConsulta : listaChamadosPendentes){
+		for(Chamado chamadoDaConsulta : listaChamadosPendentes){
 			if(chamadoDaConsulta.getStatus().equals("ABERTO")){
 				contaPendentes.setQtdAbertos(contaPendentes.getQtdAbertos()+1);
 			}else if(chamadoDaConsulta.getStatus().equals("EM ANDAMENTO")){
@@ -146,7 +176,7 @@ public class ChamadosService {
 			
 			contaPendentes.setTotalPendentes(((contaPendentes.getQtdEmAndamento()+contaPendentes.getQtdAbertos())));
 			
-			dias = calcularAtraso(chamadoDaConsulta);
+			dias = calcularDiasParaPrazo(chamadoDaConsulta);
 			if(dias > 0){
 				chamadoDaConsulta.setDiferencaTempoDeEntrega(String.valueOf(dias));
 			}else{
@@ -156,13 +186,15 @@ public class ChamadosService {
 		return contaPendentes;
 	}
 	
-	//ADICIONA APENAS O CALCULO DO ATRASO EM CADA CHAMADO DA LISTA PASSADA
-	public List<Chamados> adicionarCalcAtrasoNaLista(List<Chamados> listaChamadosPendentes){
-		List<Chamados> novaLista = new LinkedList<>();
+	/**Devido ao dado "Dias para prazo" não ser persistido, o método adicionarDiasParaPrazoNoChamado() 
+	 * foi criado para adicionar essa informação dinamicamento para cada chamado. A informação por sua vez é
+	 * gerada através do método calcularDiasParaPrazo().*/
+	public List<Chamado> adicionarDiasParaPrazoNoChamado(List<Chamado> listaChamadosPendentes){
+		List<Chamado> novaLista = new LinkedList<>();
 		int dias = 0;
-		for(Chamados chamadoDaLista : listaChamadosPendentes){
+		for(Chamado chamadoDaLista : listaChamadosPendentes){
 			
-			dias = calcularAtraso(chamadoDaLista);
+			dias = calcularDiasParaPrazo(chamadoDaLista);
 			if(dias > 0){
 				chamadoDaLista.setDiferencaTempoDeEntrega(String.valueOf(dias));
 			}else{
@@ -176,8 +208,9 @@ public class ChamadosService {
 		
 	}
 	
-	//CALCULA A QUANTIDADE DE DIAS EM ATRASO DO CHAMADO
-	public int calcularAtraso(Chamados chamado){
+	/**Calcula quantos dias faltam ou passaram do prazo de acordo com 
+	 * o prazo para solução do chamado.*/
+	public int calcularDiasParaPrazo(Chamado chamado){
 		
 		Date dData;
 		dData = chamado.getPrazoSolucao().getTime();
@@ -192,18 +225,20 @@ public class ChamadosService {
 		
 	}
 	
-	//FILTRA DE UMA LISTA DE CHAMADOS APENAS OS ATRASADOS
-	public List<Chamados> filtrarAtrasados(List<Chamados> listaChamadosPendentes){
-		List<Chamados> novaLista = new LinkedList<>();
+	/**FILTRA NUMA LISTA DE CHAMADOS APENAS OS ATRASADOS. Verificando o resultado do método
+	 * CalculoAtraso(). Este retorna a quantidade de dias em um valor inteiro e
+	 * caso seja menor que zero adiciona o chamado na lista de atrasados.*/
+	public List<Chamado> filtrarAtrasados(List<Chamado> listaChamadosPendentes){
+		List<Chamado> listaAtrasados = new LinkedList<>();
 		int dias = 0;
-		for(Chamados chamadoDaLista : listaChamadosPendentes){
-			dias = calcularAtraso(chamadoDaLista);
-			if(dias > 0){
+		for(Chamado chamadoDaLista : listaChamadosPendentes){
+			dias = calcularDiasParaPrazo(chamadoDaLista);
+			if(dias < 0){
 				chamadoDaLista.setDiferencaTempoDeEntrega(String.valueOf(dias));
-				novaLista.add(chamadoDaLista);
+				listaAtrasados.add(chamadoDaLista);
 			}
 		}
-		return novaLista;
+		return listaAtrasados;
 	}
 
 	

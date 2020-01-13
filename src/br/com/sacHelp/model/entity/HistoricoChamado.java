@@ -35,7 +35,7 @@ public class HistoricoChamado {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="chamados_id")
-	private Chamados chamado;
+	private Chamado chamado;
 	
 	
 	public HistoricoChamado(){
@@ -66,10 +66,10 @@ public class HistoricoChamado {
 	public void setHora(String hora) {
 		this.hora = hora;
 	}
-	public Chamados getChamado() {
+	public Chamado getChamado() {
 		return chamado;
 	}
-	public void setChamado(Chamados chamado) {
+	public void setChamado(Chamado chamado) {
 		this.chamado = chamado;
 	}
 

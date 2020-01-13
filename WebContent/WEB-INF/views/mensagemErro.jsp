@@ -10,7 +10,7 @@
 		<link href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css"	rel="stylesheet">
 		<link href="<%=request.getContextPath()%>/resources/css/sticky-footer-navbar.css" rel="stylesheet">
 		
-		<title>FitNet</title>
+		<title>SAC - Notificação</title>
 		
 	</head>
 	<body onload="mensagem();">

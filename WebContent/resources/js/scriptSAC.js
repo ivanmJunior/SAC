@@ -1,5 +1,8 @@
 var TelaLembretes = {
 	
+	inputData: document.querySelector('#data'),
+	checkAtivo: document.querySelector('#checkAtivo'),
+	checkAPartirData: document.querySelector('#checkAPartirData'),
 	checkRepetir: document.querySelector('#checkRepetir'),	
 	combo: document.querySelector('#cbBoxRepetir'),
 	checkSeg: document.querySelector('#checkSeg'),
@@ -8,6 +11,22 @@ var TelaLembretes = {
 	checkQui: document.querySelector('#checkQui'),
 	checkSex: document.querySelector('#checkSex'),
 	checkSab: document.querySelector('#checkSab'),
+	
+	setInputData: function(data){
+		this.inputData.value = data;
+	},
+	
+	getInputData: function(){
+		return this.inputData;
+	},
+	
+	getCheckAtivo: function(){
+		return this.checkAtivo;
+	},
+	
+	getCheckAPartirData: function(){
+		return this.checkAPartirData;
+	},
 	
 	getCheckRepetir: function(){
 		return this.checkRepetir;
@@ -41,7 +60,8 @@ var TelaLembretes = {
 		return this.checkSab;
 	}
 }
-
+//Aplicada na tabela de chamados da página index
+//Ao carregar a página verifica o estado do input checkAbas e define o que será exibido
 $(document).ready(function() {
 	
 	if(document.querySelector('#checkAbas').checked){
@@ -58,6 +78,7 @@ $(document).ready(function() {
 	}
 });
 
+//Valida formulários da página index
 (function() {
   'use strict';
   window.addEventListener('load', function() {
@@ -75,7 +96,7 @@ $(document).ready(function() {
     });
   }, false);
 })();
-
+//Aplicado aos checkbox dias da semana
 $("input").on('click', function(){
 	
 	if(TelaLembretes.getCheckRepetir().checked){
@@ -99,7 +120,10 @@ $("#checkRepetir").on('click', function(){
 
 	if(this.checked)
 	  {
+		TelaLembretes.setInputData("");
 		$(TelaLembretes.getCombo()).prop("disabled", false);
+		$(TelaLembretes.getInputData()).prop("disabled", true);
+		$(TelaLembretes.getCheckAPartirData()).prop("disabled", false);
 		$(TelaLembretes.getCheckSeg()).prop("disabled", false);
 		$(TelaLembretes.getCheckTer()).prop("disabled", false);
 		$(TelaLembretes.getCheckQua()).prop("disabled", false);
@@ -110,6 +134,8 @@ $("#checkRepetir").on('click', function(){
 	  }else if(!this.checked){
 	  	TelaLembretes.getCombo().selectedIndex = 0;
 	  	$(TelaLembretes.getCombo()).prop("disabled", true);
+	  	$(TelaLembretes.getInputData()).prop("disabled", false);
+	  	$(TelaLembretes.getCheckAPartirData()).prop("disabled", true);
 	  	$(TelaLembretes.getCheckSeg()).prop("disabled", true);
 		$(TelaLembretes.getCheckTer()).prop("disabled", true);
 		$(TelaLembretes.getCheckQua()).prop("disabled", true);
@@ -122,12 +148,19 @@ $("#checkRepetir").on('click', function(){
 		$(TelaLembretes.getCheckQua()).prop("checked", false);
 		$(TelaLembretes.getCheckQui()).prop("checked", false);
 		$(TelaLembretes.getCheckSex()).prop("checked", false);
-		$(TelaLembretes.getCheckSab()).prop("checked", false);
-			
-		  
-	  }
-	
-		
+		$(TelaLembretes.getCheckSab()).prop("checked", false); 
+		$(TelaLembretes.getCheckAPartirData()).prop("checked", false);
+	  }	
+});
+
+//Aplicado no campo data verificando os checks CheckRepetir e CheckApartirData.
+$("#checkAPartirData").on('click', function(){
+	if(TelaLembretes.getCheckRepetir().checked && TelaLembretes.getCheckAPartirData().checked){
+		$(TelaLembretes.getInputData()).prop("disabled", false);
+	}else{
+		$(TelaLembretes.getInputData()).prop("disabled", true);
+		TelaLembretes.setInputData("");
+	}
 });
 
 $("a").on('click', function(){
@@ -182,7 +215,7 @@ $("tr").on('click', function () {
     }
 });
 
-//Adiciona uma cor de nas linhas para cada linha onde o chamado está em atraso.
+//Adiciona uma cor vermelha para cada linha onde o chamado está em atraso.
 
 $('table tr').each(function() {
 	
