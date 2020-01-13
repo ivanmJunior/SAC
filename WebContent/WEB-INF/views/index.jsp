@@ -407,14 +407,26 @@
 							</div>
 						</div>
 						<div class=row>
-							<div class="col-md-6 mb-3">
+							<div class="col-md-5 mb-3">
 								<label for="data">Data</label> <input type="date" name="data"
-									class="form-control" id="data">
+									class="form-control" id="data" required>
+									<div class="invalid-feedback">Informe a data.</div>
 							</div>
-							<div class="col-md-6 mb-3">
+							<div class="col-md-3 mb-3">
 								<label for="hora">Hora</label> <input type="time" name="hora"
 									class="form-control" id="hora" required>
 								<div class="invalid-feedback">Informe a hora.</div>
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="tempoAntecipacao">Avisar Antes?</label>
+								<select class="form-control" id="tempoAntecipacao" name="tempoAntecipacao">
+									<option value="">Selecione..</option>
+									<option value="">30 Minutos</options>
+									<option value="">1 Hora</options>
+									<option value="">3 Horas</options>
+									<option value="">1 Dia</options>
+									<option value="">1 Semana</options>
+								</select>		
 							</div>
 						</div>
 						<div class=row>
@@ -442,13 +454,14 @@
 						<div class=row>
 							<div class="col-md-12 mb-3">
 								<select disabled class="form-control" id="cbBoxRepetir"
-									name="tipoRepetir">
+									name="tipoRepetir" required>
 									<option value="">Selecione aqui</option>
 									<option value="d">Diário</option>
 									<option value="m">Por Mês</option>
 									<option value="s">Por Semana</option>
 									<option value="n">Na Data</option>
 								</select>
+								<div class="invalid-feedback">Selecione como quer repetir.</div>
 							</div>
 						</div>
 						<div class=row>
